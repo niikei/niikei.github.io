@@ -54,11 +54,14 @@ table {
     margin: 20px 0;
 }
 
-table, th, td {
+table,
+th,
+td {
     border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
     padding: 8px;
     text-align: left;
 }
@@ -70,13 +73,15 @@ th {
 .sortable {
     position: relative;
     cursor: pointer;
-    padding-right: 20px; /* スペースを確保 */
+    padding-right: 20px;
+    /* スペースを確保 */
 }
 
 .sortable::after {
     content: '';
     display: inline-block;
-    width: 10px; /* 矢印のスペースを確保 */
+    width: 10px;
+    /* 矢印のスペースを確保 */
     height: 10px;
     position: absolute;
     right: 5px;
@@ -84,18 +89,22 @@ th {
 
 .sortable.ascending::after {
     content: " ▲";
-    font-size: 0.6em; /* 矢印のサイズを小さく */
+    font-size: 0.6em;
+    /* 矢印のサイズを小さく */
     position: absolute;
-    top: 50%; /* 中央に配置 */
-    transform: translateY(-100%); /* 上に配置 */
+    top: 50%;
+    /* 中央に配置 */
+    transform: translateY(-100%);
+    /* 上に配置 */
 }
 
 .sortable.descending::after {
     content: " ▼";
-    font-size: 0.6em; /* 矢印のサイズを小さく */
+    font-size: 0.6em;
+    /* 矢印のサイズを小さく */
     position: absolute;
-    top: 50%; /* 中央に配置 */
-    transform: translateY(0); /* 下に配置 */
+    top: 50%;
+    /* 中央に配置 */
+    transform: translateY(0);
+    /* 下に配置 */
 }
-
-

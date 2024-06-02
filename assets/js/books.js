@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
     // ページ数の表示形式を設定する関数
     function formatPages(pagesRead, totalPages) {
-        return `${pagesRead}/${totalPages}`;
+        return `${pagesRead} / ${totalPages}`;
     }
 
     function formatDate(dateString) {
@@ -47,18 +47,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function sortRows(columnIndex) {
         rows.sort((rowA, rowB) => {
-            const valueA = rowA.cells[columnIndex].textContent;
-            const valueB = rowB.cells[columnIndex].textContent;
+            const cellA = rowA.cells[columnIndex].textContent.split(' / ')[0]; // / を区切り文字として分割し、前の部分を取得
+            const cellB = rowB.cells[columnIndex].textContent.split(' / ')[0];
 
             if (columnIndex === 3 || columnIndex === 4) {
                 // Pages Read or Total Pages
-                return ascending ? parseInt(valueA) - parseInt(valueB) : parseInt(valueB) - parseInt(valueA);
+                return ascending ? parseInt(cellA) - parseInt(cellB) : parseInt(cellB) - parseInt(cellA);
             } else if (columnIndex === 5) {
                 // Start Date
                 return ascending ? new Date(valueA) - new Date(valueB) : new Date(valueB) - new Date(valueA);
             } else {
                 // その他の列
-                return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+                return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
             }
         });
 

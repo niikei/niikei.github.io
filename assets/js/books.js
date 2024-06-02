@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const data = await response.json();
 
     const tableBody = document.getElementById("books-table-body");
-    data.forEach(item => {
+
+    for (const item of data) {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item['Title']}</td>
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             <td>${calculateReadingDuration(item['Start Date'])}</td>
         `;
         tableBody.appendChild(row);
-    });
+    }
 
     const rows = Array.from(tableBody.querySelectorAll("tr"));
     let ascending = true;

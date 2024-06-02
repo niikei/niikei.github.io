@@ -73,8 +73,6 @@ th {
 .sortable {
     position: relative;
     cursor: pointer;
-    padding-right: 20px;
-    /* スペースを確保 */
 }
 
 .sortable::after {
@@ -107,4 +105,20 @@ th {
     /* 中央に配置 */
     transform: translateY(0);
     /* 下に配置 */
+}
+
+th[data-column="title"] {
+    text-align: left;
+}
+
+/* Title列の列を左揃えにする */
+#books-table-body td:first-child {
+    text-align: left;
+}
+
+/* その他の列の列名と列を中央揃えにする */
+thead th:not([data-column="title"]),
+#books-table-body td:not(:first-child),
+.sortable {
+    text-align: center;
 }

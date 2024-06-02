@@ -12,14 +12,52 @@
     </header>
     <main>
         <h2>Books I'm Currently Reading</h2>
-        <ul>
-            <li>Book Title 1 by Author 1</li>
-            <li>Book Title 2 by Author 2</li>
-            <li>Book Title 3 by Author 3</li>
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Score</th>
+                    <th>Type</th>
+                    <th>Progress</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Time Spent Reading (Days)</th>
+                </tr>
+            </thead>
+            <tbody id="books-table-body">
+                <tr>
+                    <td>Book Title 1</td>
+                    <td>8/10</td>
+                    <td>Novel</td>
+                    <td>50%</td>
+                    <td>2024-05-20</td>
+                    <td>2024-06-20</td>
+                    <td class="time-spent-reading">20 days</td>
+                </tr>
+                <tr>
+                    <td>Book Title 2</td>
+                    <td>7/10</td>
+                    <td>Manga</td>
+                    <td>30%</td>
+                    <td>2024-05-25</td>
+                    <td>2024-06-25</td>
+                    <td class="time-spent-reading">15 days</td>
+                </tr>
+                <tr>
+                    <td>Book Title 3</td>
+                    <td>9/10</td>
+                    <td>Paper</td>
+                    <td>70%</td>
+                    <td>2024-06-01</td>
+                    <td>2024-07-01</td>
+                    <td class="time-spent-reading">30 days</td>
+                </tr>
+            </tbody>
+        </table>
     </main>
     <footer>
         <p>&copy; 2024 niikei</p>
     </footer>
+    <script src="../assets/js/books.js"></script>
 </body>
 </html>

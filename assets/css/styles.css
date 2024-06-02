@@ -115,7 +115,7 @@ th:not(.title) {
     text-align: center;
 }
 
-th.title {
+td.title, th.title {
     white-space: normal;
     word-break: break-all;
 }

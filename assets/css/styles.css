@@ -54,7 +54,6 @@ table {
     margin: 20px 0;
 }
 
-table,
 th,
 td {
     border: 1px solid #ddd;
@@ -79,14 +78,13 @@ th {
     content: '';
     display: inline-block;
     width: 10px;
-    /* 矢印のスペースを確保 */
     height: 10px;
     position: absolute;
     right: 5px;
 }
 
 .sortable.ascending::after {
-    content: " ▲";
+    content: "▲";
     font-size: 0.6em;
     /* 矢印のサイズを小さく */
     position: absolute;
@@ -97,49 +95,30 @@ th {
 }
 
 .sortable.descending::after {
-    content: " ▼";
+    content: "▼";
     font-size: 0.6em;
-    /* 矢印のサイズを小さく */
     position: absolute;
     top: 50%;
-    /* 中央に配置 */
     transform: translateY(0);
-    /* 下に配置 */
 }
 
-th[data-column="title"] {
-    text-align: left;
-}
-
-/* Title列の列を左揃えにする */
-#books-table-body td:first-child {
-    text-align: left;
-}
-
-/* その他の列の列名と列を中央揃えにする */
 thead th:not([data-column="title"]),
-#books-table-body td:not(:first-child)
-{
+#books-table-body td:not(:first-child) {
     text-align: center;
 }
 
-td, th {
-    white-space: nowrap; /* 改行禁止 */
+td:not(.title),
+th:not(.title) {
+    white-space: nowrap;
+    text-align: center;
 }
 
 .table-wrapper {
-    overflow-x: auto; /* 横スクロールを有効にする */
-    max-width: 100%; /* 親要素の幅いっぱいに広がる */
+    overflow-x: auto;
 }
 
-@media (max-width: 600px) {
-    .table-wrapper {
-        overflow-x: auto; /* 横スクロールを有効にする */
-        max-width: 100%; /* 親要素の幅いっぱいに広がる */
-    }
-
-    table {
-        width: 100%; /* テーブル幅を親要素いっぱいに広げる */
-        border-collapse: collapse; /* セル間の隙間をなくす */
+@media (max-width: 640px) {
+    thead {
+        display: none;
     }
 }

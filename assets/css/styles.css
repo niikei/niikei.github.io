@@ -118,7 +118,7 @@ th[data-column="title"] {
 
 /* その他の列の列名と列を中央揃えにする */
 thead th:not([data-column="title"]),
-#books-table-body td:not(:first-child),
-.sortable {
+#books-table-body td:not(:first-child)
+{
     text-align: center;
 }

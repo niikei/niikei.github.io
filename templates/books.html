@@ -1,56 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currently Reading</title>
+    <title>Reading List</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
+
 <body>
     <header>
         <a href="../index.html">Back to Home</a>
     </header>
     <main>
-        <h2>Books I'm Currently Reading</h2>
+        <h2>Reading List</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Book Title</th>
-                    <th>Score</th>
-                    <th>Type</th>
-                    <th>Progress</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Time Spent Reading (Days)</th>
+                    <th class="sortable" data-column="title">Title</th>
+                    <th class="sortable" data-column="type">Type</th>
+                    <th class="sortable" data-column="progress">Progress</th>
+                    <th class="sortable" data-column="startDate">Start Date</th>
+                    <th class="sortable" data-column="duration">Reading Duration (Days)</th>
                 </tr>
             </thead>
             <tbody id="books-table-body">
                 <tr>
                     <td>Book Title 1</td>
-                    <td>8/10</td>
                     <td>Novel</td>
                     <td>50%</td>
                     <td>2024-05-20</td>
-                    <td>2024-06-20</td>
-                    <td class="time-spent-reading">20 days</td>
+                    <td class="time-spent-reading"></td>
                 </tr>
                 <tr>
                     <td>Book Title 2</td>
-                    <td>7/10</td>
                     <td>Manga</td>
                     <td>30%</td>
                     <td>2024-05-25</td>
-                    <td>2024-06-25</td>
-                    <td class="time-spent-reading">15 days</td>
+                    <td class="time-spent-reading"></td>
                 </tr>
                 <tr>
                     <td>Book Title 3</td>
-                    <td>9/10</td>
                     <td>Paper</td>
                     <td>70%</td>
                     <td>2024-06-01</td>
-                    <td>2024-07-01</td>
-                    <td class="time-spent-reading">30 days</td>
+                    <td class="time-spent-reading"></td>
                 </tr>
             </tbody>
         </table>
@@ -60,4 +54,5 @@
     </footer>
     <script src="../assets/js/books.js"></script>
 </body>
+
 </html>

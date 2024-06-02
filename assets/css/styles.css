@@ -66,3 +66,36 @@ th, td {
 th {
     background-color: #f4f4f4;
 }
+
+.sortable {
+    position: relative;
+    cursor: pointer;
+    padding-right: 20px; /* スペースを確保 */
+}
+
+.sortable::after {
+    content: '';
+    display: inline-block;
+    width: 10px; /* 矢印のスペースを確保 */
+    height: 10px;
+    position: absolute;
+    right: 5px;
+}
+
+.sortable.ascending::after {
+    content: " ▲";
+    font-size: 0.6em; /* 矢印のサイズを小さく */
+    position: absolute;
+    top: 50%; /* 中央に配置 */
+    transform: translateY(-100%); /* 上に配置 */
+}
+
+.sortable.descending::after {
+    content: " ▼";
+    font-size: 0.6em; /* 矢印のサイズを小さく */
+    position: absolute;
+    top: 50%; /* 中央に配置 */
+    transform: translateY(0); /* 下に配置 */
+}
+
+

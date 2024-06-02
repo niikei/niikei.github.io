@@ -132,8 +132,14 @@ td, th {
     max-width: 100%; /* 親要素の幅いっぱいに広がる */
 }
 
-table {
-    width: 100%; /* テーブル幅を親要素いっぱいに広げる */
+@media (max-width: 600px) {
+    .table-wrapper {
+        overflow-x: auto; /* 横スクロールを有効にする */
+        max-width: 100%; /* 親要素の幅いっぱいに広がる */
+    }
+
+    table {
+        width: 100%; /* テーブル幅を親要素いっぱいに広げる */
+        border-collapse: collapse; /* セル間の隙間をなくす */
+    }
 }
-
-

@@ -1,20 +1,16 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const rows = document.querySelectorAll("#books-table-body tr");
+document.addEventListener("DOMContentLoaded", async function () {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwPO8l2yMdYAKR7u2J-BGquTz90qKe_8SESChs17DDDd7kQxeQzHkldRRRmtFI1r0pd/exec');
+    const data = await response.json();
 
-    rows.forEach(row => {
-        const startDate = row.cells[4].textContent;
-        const daysSinceStartedCell = row.querySelector(".days-since-started");
-        const timeSpentReadingCell = row.querySelector(".time-spent-reading");
-
-        const daysSinceStarted = calculateDaysSinceStarted(startDate);
-        daysSinceStartedCell.textContent = `${daysSinceStarted} days`;
-        timeSpentReadingCell.textContent = `${daysSinceStarted} days`;
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const tableBody = document.getElementById("books-table-body");
-    const rows = Array.from(tableBody.querySelectorAll("tr"));
+    function formatDate(dateString) {
+        const startDate = new Date(dateString);
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        };
+        return startDate.toLocaleDateString(undefined, options);
+    }
 
     function calculateReadingDuration(startDate) {
         const start = new Date(startDate);
@@ -24,17 +20,19 @@ document.addEventListener("DOMContentLoaded", function() {
         return daysDifference;
     }
 
-    // 各行の Reading Duration (Days) を計算してセットする
-    rows.forEach(row => {
-        const startDate = row.cells[3].textContent;
-        const duration = calculateReadingDuration(startDate);
-        row.querySelector(".time-spent-reading").textContent = duration;
-    });
-});
-
-
-document.addEventListener("DOMContentLoaded", function() {
     const tableBody = document.getElementById("books-table-body");
+    data.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item['Title']}</td>
+            <td>${item['Type']}</td>
+            <td>${item['Progress']}</td>
+            <td>${formatDate(item['Start Date'])}</td>
+            <td class="reading-duration">${calculateReadingDuration(item['Start Date'])}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+
     const rows = Array.from(tableBody.querySelectorAll("tr"));
     let ascending = true;
     let sortedColumnIndex = null;
@@ -56,6 +54,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
+        // 元のDOMツリーから行を一旦削除
+        rows.forEach(row => {
+            tableBody.removeChild(row);
+        });
+
+        // ソートされた順に行を再挿入
         rows.forEach(row => {
             tableBody.appendChild(row);
         });
@@ -76,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const sortableHeaders = document.querySelectorAll(".sortable");
     sortableHeaders.forEach((header, index) => {
-        header.addEventListener("click", function() {
+        header.addEventListener("click", function () {
             if (index === sortedColumnIndex) {
                 toggleSortDirection();
             } else {
@@ -94,4 +98,3 @@ document.addEventListener("DOMContentLoaded", function() {
     sortRows(initialSortColumnIndex);
     updateSortIndicator(sortableHeaders[initialSortColumnIndex]);
 });
-

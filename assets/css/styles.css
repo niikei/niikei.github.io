@@ -122,3 +122,18 @@ thead th:not([data-column="title"]),
 {
     text-align: center;
 }
+
+td, th {
+    white-space: nowrap; /* 改行禁止 */
+}
+
+.table-wrapper {
+    overflow-x: auto; /* 横スクロールを有効にする */
+    max-width: 100%; /* 親要素の幅いっぱいに広がる */
+}
+
+table {
+    width: 100%; /* テーブル幅を親要素いっぱいに広げる */
+}
+
+

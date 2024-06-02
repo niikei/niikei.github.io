@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwPO8l2yMdYAKR7u2J-BGquTz90qKe_8SESChs17DDDd7kQxeQzHkldRRRmtFI1r0pd/exec');
-    const data = await response.json();
+    // ページ数の表示形式を設定する関数
+    function formatPages(pagesRead, totalPages) {
+        return `${pagesRead}/${totalPages}`;
+    }
 
     function formatDate(dateString) {
         const startDate = new Date(dateString);
@@ -12,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         return startDate.toLocaleDateString(undefined, options);
     }
 
+    // 日数の計算を行う関数
     function calculateReadingDuration(startDate) {
         const start = new Date(startDate);
         const today = new Date();
@@ -20,15 +23,19 @@ document.addEventListener("DOMContentLoaded", async function () {
         return daysDifference;
     }
 
+    // サーバーからデータを取得してテーブルに挿入する処理
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwPO8l2yMdYAKR7u2J-BGquTz90qKe_8SESChs17DDDd7kQxeQzHkldRRRmtFI1r0pd/exec');
+    const data = await response.json();
+
     const tableBody = document.getElementById("books-table-body");
     data.forEach(item => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${item['Title']}</td>
             <td>${item['Type']}</td>
-            <td>${item['Progress']}</td>
+            <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
             <td>${formatDate(item['Start Date'])}</td>
-            <td class="reading-duration">${calculateReadingDuration(item['Start Date'])}</td>
+            <td>${calculateReadingDuration(item['Start Date'])}</td>
         `;
         tableBody.appendChild(row);
     });
@@ -42,12 +49,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             const valueA = rowA.cells[columnIndex].textContent;
             const valueB = rowB.cells[columnIndex].textContent;
 
-            if (columnIndex === 3) {
+            if (columnIndex === 3 || columnIndex === 4) {
+                // Pages Read or Total Pages
+                return ascending ? parseInt(valueA) - parseInt(valueB) : parseInt(valueB) - parseInt(valueA);
+            } else if (columnIndex === 5) {
                 // Start Date
                 return ascending ? new Date(valueA) - new Date(valueB) : new Date(valueB) - new Date(valueA);
-            } else if (columnIndex === 4) {
-                // Reading Duration (Days)
-                return ascending ? parseInt(valueA) - parseInt(valueB) : parseInt(valueB) - parseInt(valueA);
             } else {
                 // その他の列
                 return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);

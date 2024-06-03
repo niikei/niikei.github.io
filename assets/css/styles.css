@@ -126,7 +126,7 @@ td.title, th.title {
 }
 
 table.responsive {
-    max-width: 90%; /* 任意の幅に調整 */
+    max-width: 95%; /* 任意の幅に調整 */
     margin: 0 auto; /* 中央揃え */
 }
 
@@ -136,6 +136,6 @@ table.responsive {
     }
 
     tr.data-row {
-        font-size: 0.6em
+        font-size: 0.8em
     }
 }

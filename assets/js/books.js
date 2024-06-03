@@ -50,11 +50,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             dataRow.classList.add("data-row");
             const progress = Math.floor((item['Pages Read'] / item['Total Pages']) * 100);
             dataRow.innerHTML = `
-                        <td>Type: ${item['Type']}</td>
-                        <td>Pages: ${formatPages(item['Pages Read'], item['Total Pages'])}</td>
-                        <td>Progress: ${progress}%</td>
-                        <td>Start Date: ${formatDate(item['Start Date'])}</td>
-                        <td>Days Read: ${calculateReadingDuration(item['Start Date'])}</td>
+                        <td>${item['Type']}</td>
+                        <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
+                        <td>${progress}%</td>
+                        <td>${formatDate(item['Start Date'])}</td>
+                        <td>${calculateReadingDuration(item['Start Date'])} Days</td>
                     `;
             table.appendChild(dataRow);
 

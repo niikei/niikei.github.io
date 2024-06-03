@@ -20,6 +20,13 @@ header img#logo {
     margin: 0 auto;
 }
 
+
+main img#construction {
+    max-width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+
 header nav ul {
     list-style: none;
     padding: 0;

@@ -42,15 +42,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             const titleRow = document.createElement("tr");
             titleRow.classList.add("title-row");
             titleRow.innerHTML = `
-                        <th colspan="4" class="title">${item['Title']}</th>
+                        <th colspan="5" class="title">${item['Title']}</th>
                     `;
             table.appendChild(titleRow);
 
             const dataRow = document.createElement("tr");
             dataRow.classList.add("data-row");
+            const progress = Math.floor((item['Pages Read'] / item['Total Pages']) * 100);
             dataRow.innerHTML = `
                         <td>Type: ${item['Type']}</td>
                         <td>Pages: ${formatPages(item['Pages Read'], item['Total Pages'])}</td>
+                        <td>Progress: ${progress}%</td>
                         <td>Start Date: ${formatDate(item['Start Date'])}</td>
                         <td>Days Read: ${calculateReadingDuration(item['Start Date'])}</td>
                     `;
@@ -61,80 +63,95 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else {
         for (const item of data) {
             const row = document.createElement("tr");
+            const progress = Math.floor((item['Pages Read'] / item['Total Pages']) * 100);
             row.innerHTML = `
                 <td class="title">${item['Title']}</td>
                 <td>${item['Type']}</td>
                 <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
+                <td>${progress}%</td>
                 <td>${formatDate(item['Start Date'])}</td>
                 <td>${calculateReadingDuration(item['Start Date'])}</td>
             `;
             tableBody.appendChild(row);
         }
+    }
 
-        // ソート可能なヘッダーの取得
-        const sortableHeaders = document.querySelectorAll(".sortable");
-        let ascending = true;
-        let sortedColumnIndex = null;
-        const rows = Array.from(tableBody.querySelectorAll("tr"));
+    // ソート可能なヘッダーの取得
+    const sortableHeaders = document.querySelectorAll(".sortable");
+    let ascending = true;
+    let sortedColumnIndex = null;
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
 
-        // 初期表示: title列で昇順にソート
-        const initialSortColumnIndex = 0; // title列のインデックス
-        sortedColumnIndex = initialSortColumnIndex;
-        sortRows(initialSortColumnIndex);
-        updateSortIndicator(sortableHeaders[initialSortColumnIndex]);
+    // 初期表示: title列で昇順にソート
+    const initialSortColumnIndex = 0; // title列のインデックス
+    sortedColumnIndex = initialSortColumnIndex;
+    sortRows(initialSortColumnIndex);
+    updateSortIndicator(sortableHeaders[initialSortColumnIndex]);
 
-        function sortRows(columnIndex) {
-            rows.sort((rowA, rowB) => {
-                const cellA = rowA.cells[columnIndex].textContent.split(' / ')[0]; // / を区切り文字として分割し、前の部分を取得
-                const cellB = rowB.cells[columnIndex].textContent.split(' / ')[0];
+    function sortRows(columnIndex) {
+        rows.sort((rowA, rowB) => {
+            const cellA = rowA.cells[columnIndex].textContent;
+            const cellB = rowB.cells[columnIndex].textContent;
+    
+            if (columnIndex === 2) {
+                // Pages Read
+                const pagesReadA = parseInt(cellA.split(' / ')[0]);
+                const pagesReadB = parseInt(cellB.split(' / ')[0]);
+                return ascending ? pagesReadA - pagesReadB : pagesReadB - pagesReadA;
+            } else if (columnIndex === 3) {
+                // Progress
+                const progressA = parseInt(cellA.replace('%', ''));
+                const progressB = parseInt(cellB.replace('%', ''));
+                return ascending ? progressA - progressB : progressB - progressA;
+            } else if (columnIndex === 4) {
+                // Start Date
+                return ascending ? new Date(cellA) - new Date(cellB) : new Date(cellB) - new Date(cellA);
+            } else if (columnIndex === 5) {
+                // Days Read
+                const daysReadA = parseInt(cellA);
+                const daysReadB = parseInt(cellB);
+                return ascending ? daysReadA - daysReadB : daysReadB - daysReadA;
+            } else {
+                // その他の列
+                return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            }
+        });
 
-                if (columnIndex === 3 || columnIndex === 4) {
-                    // Pages Read or Total Pages
-                    return ascending ? parseInt(cellA) - parseInt(cellB) : parseInt(cellB) - parseInt(cellA);
-                } else if (columnIndex === 5) {
-                    // Start Date
-                    return ascending ? new Date(valueA) - new Date(valueB) : new Date(valueB) - new Date(valueA);
-                } else {
-                    // その他の列
-                    return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-                }
-            });
+        // 元のDOMツリーから行を一旦削除
+        rows.forEach(row => {
+            tableBody.removeChild(row);
+        });
 
-            // 元のDOMツリーから行を一旦削除
-            rows.forEach(row => {
-                tableBody.removeChild(row);
-            });
-
-            // ソートされた順に行を再挿入
-            rows.forEach(row => {
-                tableBody.appendChild(row);
-            });
-        }
-
-        function toggleSortDirection() {
-            ascending = !ascending;
-        }
-
-        function updateSortIndicator(target) {
-            const indicators = document.querySelectorAll(".sortable");
-            indicators.forEach(indicator => {
-                indicator.classList.remove("ascending", "descending");
-            });
-
-            target.classList.add(ascending ? "ascending" : "descending");
-        }
-
-        sortableHeaders.forEach((header, index) => {
-            header.addEventListener("click", function () {
-                if (index === sortedColumnIndex) {
-                    toggleSortDirection();
-                } else {
-                    ascending = true;
-                    sortedColumnIndex = index;
-                }
-                sortRows(index);
-                updateSortIndicator(header);
-            });
+        // ソートされた順に行を再挿入
+        rows.forEach(row => {
+            tableBody.appendChild(row);
         });
     }
-});
+
+    function toggleSortDirection() {
+        ascending = !ascending;
+    }
+
+    function updateSortIndicator(target) {
+        const indicators = document.querySelectorAll(".sortable");
+        indicators.forEach(indicator => {
+            indicator.classList.remove("ascending", "descending");
+        });
+
+        target.classList.add(ascending ? "ascending" : "descending");
+    }
+
+    sortableHeaders.forEach((header, index) => {
+        header.addEventListener("click", function () {
+            if (index === sortedColumnIndex) {
+                toggleSortDirection();
+            } else {
+                ascending = true;
+                sortedColumnIndex = index;
+            }
+            sortRows(index);
+            updateSortIndicator(header);
+        });
+    });
+}
+);

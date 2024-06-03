@@ -122,8 +122,7 @@ th:not(.title) {
 }
 
 td.title, th.title {
-    white-space: normal;
-    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 table.responsive {

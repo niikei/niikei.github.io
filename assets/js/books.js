@@ -41,6 +41,9 @@ async function main() {
     }
 
     function createPhoneView(item) {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("phone-wrapper");
+
         const table = document.createElement("table");
         const titleRow = document.createElement("tr");
         titleRow.classList.add("title-row");
@@ -58,7 +61,8 @@ async function main() {
         `;
         table.appendChild(dataRow);
 
-        return table;
+        wrapper.appendChild(table);
+        return wrapper;
     }
 
     function createDesktopView(item) {
@@ -92,17 +96,36 @@ async function main() {
         });
 
         function sortRows(columnIndex) {
-            const rows = Array.from(tableBody.querySelectorAll("tr")).sort((rowA, rowB) => {
-                const cellA = rowA.cells[columnIndex].textContent;
-                const cellB = rowB.cells[columnIndex].textContent;
-                return compareCells(cellA, cellB, columnIndex);
-            });
+            let rows;
 
-            tableBody.innerHTML = "";
-            rows.forEach(row => tableBody.appendChild(row));
+            if (isSmartPhone()) {
+                rows = Array.from(tableBody.querySelectorAll(".phone-wrapper")).sort((wrapperA, wrapperB) => {
+                    if (columnIndex === 0) {
+                        const titleA = wrapperA.querySelector(".title").textContent;
+                        const titleB = wrapperB.querySelector(".title").textContent;
+                        return compareRows(titleA, titleB, columnIndex);
+                    } else {
+                        const rowA = wrapperA.querySelector(".data-row").cells[columnIndex - 1].textContent;
+                        const rowB = wrapperB.querySelector(".data-row").cells[columnIndex - 1].textContent;
+                        return compareRows(rowA, rowB, columnIndex);
+                    }
+                });
+
+                tableBody.innerHTML = "";
+                rows.forEach(row => tableBody.appendChild(row));
+            } else {
+                rows = Array.from(tableBody.querySelectorAll("tr")).sort((rowA, rowB) => {
+                    const cellA = rowA.cells[columnIndex].textContent;
+                    const cellB = rowB.cells[columnIndex].textContent;
+                    return compareRows(cellA, cellB, columnIndex);
+                });
+
+                tableBody.innerHTML = "";
+                rows.forEach(row => tableBody.appendChild(row));
+            }
         }
 
-        function compareCells(cellA, cellB, columnIndex) {
+        function compareRows(cellA, cellB, columnIndex) {
             if (columnIndex === 2) {
                 return ascending ? parseInt(cellA.split(' / ')[0]) - parseInt(cellB.split(' / ')[0]) : parseInt(cellB.split(' / ')[0]) - parseInt(cellA.split(' / ')[0]);
             }

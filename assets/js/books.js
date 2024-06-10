@@ -24,6 +24,11 @@ async function main() {
         return Math.floor((new Date() - new Date(startDate)) / (1000 * 60 * 60 * 24));
     }
 
+    function calculateReadingSpeed(pagesRead, startDate) {
+        const duration = Math.floor(calculateReadingDuration(startDate));
+        return duration > 0 ? (pagesRead / duration).toFixed(1) : 0;
+    }
+
     function isSmartPhone() {
         return window.matchMedia('(max-width: 640px)').matches;
     }
@@ -56,8 +61,8 @@ async function main() {
             <td>${item['Type']}</td>
             <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
             <td>${Math.floor((item['Pages Read'] / item['Total Pages']) * 100)}%</td>
-            <td>${formatDate(item['Start Date'])}</td>
-            <td>${calculateReadingDuration(item['Start Date'])} Days</td>
+            <td>${calculateReadingDuration(item['Start Date'])} days</td>
+            <td>${calculateReadingSpeed(item['Pages Read'], item['Start Date'])} /day</td>
         `;
         table.appendChild(dataRow);
 
@@ -72,8 +77,8 @@ async function main() {
             <td>${item['Type']}</td>
             <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
             <td>${Math.floor((item['Pages Read'] / item['Total Pages']) * 100)}%</td>
-            <td>${formatDate(item['Start Date'])}</td>
             <td>${calculateReadingDuration(item['Start Date'])}</td>
+            <td>${calculateReadingSpeed(item['Pages Read'], item['Start Date'])} /day</td>
         `;
         return row;
     }
@@ -132,9 +137,7 @@ async function main() {
             else if (columnIndex === 3) {
                 return ascending ? parseInt(cellA.replace('%', '')) - parseInt(cellB.replace('%', '')) : parseInt(cellB.replace('%', '')) - parseInt(cellA.replace('%', ''));
             } else if (columnIndex === 4) {
-                return ascending ? new Date(cellA) - new Date(cellB) : new Date(cellB) - new Date(cellA);
-            } else if (columnIndex === 5) {
-                return ascending ? parseInt(cellA) - parseInt(cellB) : parseInt(cellB) - parseInt(cellA);
+                return ascending ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
             } else {
                 return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
             }

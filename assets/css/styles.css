@@ -130,6 +130,18 @@ table.responsive {
     margin: 0 auto; /* 中央揃え */
 }
 
+.social-media-icons {
+    margin-top: 10px;
+    display: flex; /* フレックスボックスを有効にする */
+    justify-content: center; /* 中央揃えにする */
+    gap: 24px;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+}
+
 @media (max-width: 640px) {
     thead {
         display: none;

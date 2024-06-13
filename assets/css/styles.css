@@ -134,7 +134,7 @@ table.responsive {
     margin-top: 10px;
     display: flex; /* フレックスボックスを有効にする */
     justify-content: center; /* 中央揃えにする */
-    gap: 24px;
+    gap: 25px;
 }
 
 .social-icon {

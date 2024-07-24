@@ -17,7 +17,7 @@ async function main() {
     }
 
     function formatDate(dateString) {
-        return new Date(dateString).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' });
+        return dateString ? new Date(dateString).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' }) : '';
     }
 
     function calculateReadingDuration(startDate) {
@@ -52,13 +52,14 @@ async function main() {
         const table = document.createElement("table");
         const titleRow = document.createElement("tr");
         titleRow.classList.add("title-row");
-        titleRow.innerHTML = `<th colspan="5" class="title">${item['Title']}</th>`;
+        titleRow.innerHTML = `<th colspan="7" class="title">${item['Title']}</th>`;
         table.appendChild(titleRow);
 
         const dataRow = document.createElement("tr");
         dataRow.classList.add("data-row");
         dataRow.innerHTML = `
             <td>${item['Type']}</td>
+            <td>${item['Status']}</td>
             <td>${formatPages(item['PagesRead'], item['TotalPages'])}</td>
             <td>${Math.floor((item['PagesRead'] / item['TotalPages']) * 100)}%</td>
             <td>${calculateReadingDuration(item['StartDate'])} days</td>
@@ -75,6 +76,7 @@ async function main() {
         row.innerHTML = `
             <td class="title">${item['Title']}</td>
             <td>${item['Type']}</td>
+            <td>${item['Status']}</td>
             <td>${formatPages(item['PagesRead'], item['TotalPages'])}</td>
             <td>${Math.floor((item['PagesRead'] / item['TotalPages']) * 100)}%</td>
             <td>${calculateReadingDuration(item['StartDate'])}</td>

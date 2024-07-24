@@ -59,10 +59,10 @@ async function main() {
         dataRow.classList.add("data-row");
         dataRow.innerHTML = `
             <td>${item['Type']}</td>
-            <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
-            <td>${Math.floor((item['Pages Read'] / item['Total Pages']) * 100)}%</td>
-            <td>${calculateReadingDuration(item['Start Date'])} days</td>
-            <td>${calculateReadingSpeed(item['Pages Read'], item['Start Date'])} /day</td>
+            <td>${formatPages(item['PagesRead'], item['TotalPages'])}</td>
+            <td>${Math.floor((item['PagesRead'] / item['TotalPages']) * 100)}%</td>
+            <td>${calculateReadingDuration(item['StartDate'])} days</td>
+            <td>${calculateReadingSpeed(item['PagesRead'], item['StartDate'])} /day</td>
         `;
         table.appendChild(dataRow);
 
@@ -75,10 +75,10 @@ async function main() {
         row.innerHTML = `
             <td class="title">${item['Title']}</td>
             <td>${item['Type']}</td>
-            <td>${formatPages(item['Pages Read'], item['Total Pages'])}</td>
-            <td>${Math.floor((item['Pages Read'] / item['Total Pages']) * 100)}%</td>
-            <td>${calculateReadingDuration(item['Start Date'])}</td>
-            <td>${calculateReadingSpeed(item['Pages Read'], item['Start Date'])} /day</td>
+            <td>${formatPages(item['PagesRead'], item['TotalPages'])}</td>
+            <td>${Math.floor((item['PagesRead'] / item['TotalPages']) * 100)}%</td>
+            <td>${calculateReadingDuration(item['StartDate'])}</td>
+            <td>${calculateReadingSpeed(item['PagesRead'], item['StartDate'])} /day</td>
         `;
         return row;
     }

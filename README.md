@@ -27,8 +27,8 @@ class Book {
   Status: Status
   PagesRead: int
   TotalPages: int
-  StartDate: Date
-  EndDate: Date
+  StartDate: Date <<Optional>>
+  EndDate: Date <<Optional>>
 }
 
 enum Type {

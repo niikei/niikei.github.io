@@ -2,10 +2,15 @@ document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
     const tableBody = document.getElementById("books-table-body");
-    const data = await fetchData('https://script.google.com/macros/s/AKfycbwPO8l2yMdYAKR7u2J-BGquTz90qKe_8SESChs17DDDd7kQxeQzHkldRRRmtFI1r0pd/exec');
+    let data;
 
-    checkWindowSizeAndUpdateDisplay();
-    window.addEventListener('resize', checkWindowSizeAndUpdateDisplay);
+    try {
+        data = await fetchData('https://script.google.com/macros/s/AKfycbwPO8l2yMdYAKR7u2J-BGquTz90qKe_8SESChs17DDDd7kQxeQzHkldRRRmtFI1r0pd/exec');
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        tableBody.innerHTML = '<tr><td colspan="7">Error loading data</td></tr>';
+        return;
+    }
 
     async function fetchData(url) {
         const response = await fetch(url);

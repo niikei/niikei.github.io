@@ -57,18 +57,18 @@ async function main() {
         const table = document.createElement("table");
         const titleRow = document.createElement("tr");
         titleRow.classList.add("title-row");
-        titleRow.innerHTML = `<th colspan="7" class="title">${item['Title']}</th>`;
+        titleRow.innerHTML = `<th colspan="7" class="title">${item.Title}</th>`;
         table.appendChild(titleRow);
 
         const dataRow = document.createElement("tr");
         dataRow.classList.add("data-row");
         dataRow.innerHTML = `
-            <td>${item['Type']}</td>
-            <td>${item['Status']}</td>
-            <td>${formatPages(item['PagesRead'], item['TotalPages'])}</td>
-            <td>${Math.floor((item['PagesRead'] / item['TotalPages']) * 100)}%</td>
-            <td>${calculateReadingDuration(item['StartDate'])} days</td>
-            <td>${calculateReadingSpeed(item['PagesRead'], item['StartDate'])} /day</td>
+            <td>${item.Type}</td>
+            <td>${item.Status}</td>
+            <td>${formatPages(item.PagesRead, item.TotalPages)}</td>
+            <td>${Math.floor((item.PagesRead / item.TotalPages) * 100)}%</td>
+            <td>${calculateReadingDuration(item.StartDate)} days</td>
+            <td>${calculateReadingSpeed(item.PagesRead, item.StartDate)} /day</td>
         `;
         table.appendChild(dataRow);
 
@@ -79,13 +79,13 @@ async function main() {
     function createDesktopView(item) {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td class="title">${item['Title']}</td>
-            <td>${item['Type']}</td>
-            <td>${item['Status']}</td>
-            <td>${formatPages(item['PagesRead'], item['TotalPages'])}</td>
-            <td>${Math.floor((item['PagesRead'] / item['TotalPages']) * 100)}%</td>
-            <td>${calculateReadingDuration(item['StartDate'])}</td>
-            <td>${calculateReadingSpeed(item['PagesRead'], item['StartDate'])} /day</td>
+            <td class="title">${item.Title}</td>
+            <td>${item.Type}</td>
+            <td>${item.Status}</td>
+            <td>${formatPages(item.PagesRead, item.TotalPages)}</td>
+            <td>${Math.floor((item.PagesRead / item.TotalPages) * 100)}%</td>
+            <td>${calculateReadingDuration(item.StartDate)}</td>
+            <td>${calculateReadingSpeed(item.PagesRead, item.StartDate)} /day</td>
         `;
         return row;
     }

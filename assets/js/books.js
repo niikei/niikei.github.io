@@ -12,33 +12,15 @@ async function main() {
         return;
     }
 
+    renderTable(data);
+    window.addEventListener('resize', () => renderTable(data));
+
     async function fetchData(url) {
         const response = await fetch(url);
         return await response.json();
     }
 
-    function formatPages(pagesRead, totalPages) {
-        return `${pagesRead} / ${totalPages}`;
-    }
-
-    function formatDate(dateString) {
-        return dateString ? new Date(dateString).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' }) : '';
-    }
-
-    function calculateReadingDuration(startDate) {
-        return Math.floor((new Date() - new Date(startDate)) / (1000 * 60 * 60 * 24));
-    }
-
-    function calculateReadingSpeed(pagesRead, startDate) {
-        const duration = Math.floor(calculateReadingDuration(startDate));
-        return duration > 0 ? (pagesRead / duration).toFixed(1) : 0;
-    }
-
-    function isSmartPhone() {
-        return window.matchMedia('(max-width: 640px)').matches;
-    }
-
-    function checkWindowSizeAndUpdateDisplay() {
+    function renderTable(data) {
         const isPhone = isSmartPhone();
         tableBody.innerHTML = "";
 
@@ -48,6 +30,23 @@ async function main() {
         });
 
         setupSortableHeaders();
+    }
+
+    function formatPages(pagesRead, totalPages) {
+        return `${pagesRead} / ${totalPages}`;
+    }
+
+    function calculateReadingDuration(startDate) {
+        return Math.floor((new Date() - new Date(startDate)) / (1000 * 60 * 60 * 24));
+    }
+
+    function calculateReadingSpeed(pagesRead, startDate) {
+        const duration = calculateReadingDuration(startDate);
+        return duration > 0 ? (pagesRead / duration).toFixed(1) : 0;
+    }
+
+    function isSmartPhone() {
+        return window.matchMedia('(max-width: 640px)').matches;
     }
 
     function createPhoneView(item) {

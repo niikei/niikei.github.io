@@ -157,13 +157,15 @@ async function main() {
         }
 
         function compareRows(cellA, cellB, columnIndex) {
-            if (columnIndex === 2) {
+            if (columnIndex === 3) {
                 return ascending ? parseInt(cellA.split(' / ')[0]) - parseInt(cellB.split(' / ')[0]) : parseInt(cellB.split(' / ')[0]) - parseInt(cellA.split(' / ')[0]);
             }
-            else if (columnIndex === 3) {
+            else if (columnIndex === 4) {
                 return ascending ? parseInt(cellA.replace('%', '')) - parseInt(cellB.replace('%', '')) : parseInt(cellB.replace('%', '')) - parseInt(cellA.replace('%', ''));
-            } else if (columnIndex === 4) {
-                return ascending ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+            } else if (columnIndex === 5) {
+                return ascending ? parseInt(cellA) - parseInt(cellB) : parseInt(cellB) - parseFloat(cellA);
+            } else if (columnIndex === 6) {
+                return ascending ? parseFloat(cellA.split(' / ')[0]) - parseFloat(cellB.split(' / ')[0]) : parseFloat(cellB.split(' / ')[0]) - parseFloat(cellA.split(' / ')[0]);
             } else {
                 return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
             }

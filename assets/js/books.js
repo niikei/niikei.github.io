@@ -36,12 +36,20 @@ async function main() {
         return `${pagesRead} / ${totalPages}`;
     }
 
-    function calculateReadingDuration(startDate) {
-        return Math.floor((new Date() - new Date(startDate)) / (1000 * 60 * 60 * 24));
+    function calculateReadingDuration(startDate, endDate) {
+        if (!startDate) return 0;
+        if (!endDate) endDate = new Date();
+
+        if (endDate < startDate) {
+            console.error("End date is before start date");
+            return "End date is before start date";
+        }
+
+        return Math.floor((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
     }
 
-    function calculateReadingSpeed(pagesRead, startDate) {
-        const duration = calculateReadingDuration(startDate);
+    function calculateReadingSpeed(pagesRead, startDate, endDate) {
+        const duration = calculateReadingDuration(startDate, endDate);
         return duration > 0 ? (pagesRead / duration).toFixed(1) : 0;
     }
 
@@ -66,8 +74,8 @@ async function main() {
             <td>${item.Status}</td>
             <td>${formatPages(item.PagesRead, item.TotalPages)}</td>
             <td>${Math.floor((item.PagesRead / item.TotalPages) * 100)}%</td>
-            <td>${calculateReadingDuration(item.StartDate)} days</td>
-            <td>${calculateReadingSpeed(item.PagesRead, item.StartDate)} /day</td>
+            <td>${calculateReadingDuration(item.StartDate, item.EndDate)} days</td>
+            <td>${calculateReadingSpeed(item.PagesRead, item.StartDate, item.EndDate)} / day</td>
         `;
         table.appendChild(dataRow);
 
@@ -83,8 +91,8 @@ async function main() {
             <td>${item.Status}</td>
             <td>${formatPages(item.PagesRead, item.TotalPages)}</td>
             <td>${Math.floor((item.PagesRead / item.TotalPages) * 100)}%</td>
-            <td>${calculateReadingDuration(item.StartDate)}</td>
-            <td>${calculateReadingSpeed(item.PagesRead, item.StartDate)} /day</td>
+            <td>${calculateReadingDuration(item.StartDate, item.EndDate)}</td>
+            <td>${calculateReadingSpeed(item.PagesRead, item.StartDate, item.EndDate)} / day</td>
         `;
         return row;
     }

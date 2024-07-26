@@ -142,6 +142,10 @@ table.responsive {
     height: 24px;
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 640px) {
     thead {
         display: none;

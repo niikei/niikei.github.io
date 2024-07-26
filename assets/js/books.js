@@ -2,15 +2,27 @@ document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
     const tableBody = document.getElementById("books-table-body");
+    const loadingMessage = document.getElementById("loading-message");
     let data;
+    const tableWrapper = document.querySelector(".table-wrapper");
+
+    // Hide the table and show the loading message
+    tableWrapper.classList.add("hidden");
+    loadingMessage.style.display = "block";
 
     try {
         data = await fetchData('https://script.google.com/macros/s/AKfycbwPO8l2yMdYAKR7u2J-BGquTz90qKe_8SESChs17DDDd7kQxeQzHkldRRRmtFI1r0pd/exec');
     } catch (error) {
         console.error('Error fetching data:', error);
         tableBody.innerHTML = '<tr><td colspan="7">Error loading data</td></tr>';
+        // Hide the loading message
+        loadingMessage.style.display = "none";
         return;
     }
+
+    // Hide the loading message and show the table
+    loadingMessage.style.display = "none";
+    tableWrapper.classList.remove("hidden");
 
     renderTable(data);
     window.addEventListener('resize', () => renderTable(data));

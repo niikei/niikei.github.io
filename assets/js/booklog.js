@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const fetchBooksButton = document.getElementById("fetch-books");
     const categorySelect = document.getElementById("category");
     const statusSelect = document.getElementById("status");
     const bookshelfDiv = document.getElementById("bookshelf");
 
-    fetchBooksButton.addEventListener("click", function () {
+    function fetchBooks() {
         const category = categorySelect.value;
         const status = statusSelect.value;
 
@@ -21,5 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
         bookshelfDiv.innerHTML = "";
         bookshelfDiv.appendChild(script1);
         bookshelfDiv.appendChild(script2);
-    });
+    }
+
+    // Fetch books when the page loads
+    fetchBooks();
+
+    // Fetch books when the category or status changes
+    categorySelect.addEventListener("change", fetchBooks);
+    statusSelect.addEventListener("change", fetchBooks);
 });

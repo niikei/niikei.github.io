@@ -14,7 +14,7 @@
     </header>
     <main>
         <h2>Book Log</h2>
-        <div>
+        <div style="text-align: center;">
             <label for="category">Category:</label>
             <select id="category">
                 <option value="0">All</option>
@@ -27,14 +27,12 @@
             <label for="status">Status:</label>
             <select id="status">
                 <option value="0">All</option>
-                <option value="1">Want to Read</option>
-                <option value="2">Currently Reading</option>
-                <option value="3">Finished Reading</option>
+                <option value="1">読みたい</option>
+                <option value="2">いま読んでる</option>
+                <option value="3">読み終わった</option>
             </select>
-
-            <button id="fetch-books">Fetch Books</button>
         </div>
-        <div id="bookshelf"></div>
+        <div id="bookshelf" align="center"></div>
     </main>
     <footer>
         <p>&copy; 2024 niikei</p>

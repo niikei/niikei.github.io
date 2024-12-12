@@ -155,3 +155,18 @@ table.responsive {
         font-size: 0.7em
     }
 }
+
+/* bookshelfを画面いっぱいに広げるためのベーススタイル */
+#bookshelf {
+    width: 100%;
+    /* 高さはJSで設定 */
+    overflow: auto;
+    background-color: #fafafa;
+    text-align: center; /* 中のテキストやインライン要素をセンタリング */
+}
+
+/* もしBooklogウィジェットがブロック要素として配置される場合は、中央寄せするために以下を追加 */
+#bookshelf > div {
+    display: inline-block;
+    margin: 0 auto;
+}

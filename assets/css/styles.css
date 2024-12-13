@@ -166,7 +166,32 @@ table.responsive {
 }
 
 /* もしBooklogウィジェットがブロック要素として配置される場合は、中央寄せするために以下を追加 */
-#bookshelf > div {
+/* #bookshelf > div {
     display: inline-block;
     margin: 0 auto;
+} */
+
+/* 本棚のトップ部分のスタイル */
+#bookshelf div:first-child {
+    height: 20px; /* 高さを変更 */
+    background-size: contain; /* 背景画像を調整 */
+}
+
+/* 本棚のメイン部分（書籍リスト）のスタイル */
+#bookshelf div:nth-child(2) {
+    height: 100px; /* 高さを変更 */
+    background-size: contain; /* 背景画像を調整 */
+}
+
+/* 各書籍のアイコンサイズを調整 */
+#bookshelf span img {
+    width: 40px; /* 好みの幅 */
+    height: 55px; /* 高さも同じ比率で変更 */
+    margin-right: 10px; /* アイコン間の間隔を調整 */
+}
+
+/* 本棚の下部部分のスタイル */
+#bookshelf div:last-child {
+    height: 30px; /* 高さを変更 */
+    background-size: contain; /* 背景画像を調整 */
 }

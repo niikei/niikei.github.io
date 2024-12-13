@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booklog Minishelf</title>
+    <style>
+        /* 全体のスタイル */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #recent_books {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* 本のカードデザイン */
+        span.book {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 280px;
+            display: flex;
+            flex-direction: row;
+            padding: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        span.book:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 本の画像 */
+        span.book_image img {
+            border-radius: 4px;
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        /* タイトルと著者名 */
+        span.book_title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        span.book_title a {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+
+        span.book_title a:hover {
+            color: #0073e6;
+        }
+
+        .book_author {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* クリアクラス（使用しない場合削除可） */
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <h1>niikeiの本棚</h1>
+    <div id="recent_books"></div>
+    <div class="clear"></div>
+
+    <script type="text/javascript">
+        function booklog_minishelf(json) {
+            var items = json["books"];
+            var html = "";
+
+            for (var i = 0; i < items.length; i++) {
+                var elem = items[i];
+                var text =
+                    '<span class="book">' +
+                    '<span class="book_image">' +
+                    '<a href="' + elem["url"] + '" target="_blank">' +
+                    '<img src="' + elem["image"] + '" title="' + elem["title"] + '" alt="No Image" />' +
+                    '</a>' +
+                    '</span>' +
+                    '<span class="book_title">' +
+                    '<a href="' + elem["url"] + '" target="_blank">' + elem["title"] + '</a>' +
+                    '<div class="book_author">' + elem["author"] + '</div>' +
+                    '</span>' +
+                    '</span>';
+                html += text;
+            }
+            document.getElementById("recent_books").innerHTML = html;
+        }
+    </script>
+    <script src="https://api.booklog.jp/json/niikei?category=0&count=10&callback=booklog_minishelf"></script>
+</body>
+</html>

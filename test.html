@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,6 +87,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>niikeiの本棚</h1>
     <div id="recent_books"></div>
@@ -93,6 +95,7 @@
 
     <script type="text/javascript">
         function booklog_minishelf(json) {
+
             var items = json["books"];
             var html = "";
 
@@ -117,4 +120,5 @@
     </script>
     <script src="https://api.booklog.jp/json/niikei?category=0&count=10&callback=booklog_minishelf"></script>
 </body>
+
 </html>

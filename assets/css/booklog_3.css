@@ -1,0 +1,123 @@
+/* グローバルスタイル */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0073e6;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* メインエリア */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+main h2 {
+    text-align: center;
+    color: #444;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* フィルタ部分 */
+main div {
+    margin-bottom: 20px;
+}
+
+main label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+main select {
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 本棚 */
+#bookshelf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* 本のカードデザイン */
+.book-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 本の画像 */
+.book-card img {
+    width: 100px;
+    height: 150px;
+    margin: 20px auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* 本のタイトルと著者 */
+.book-card h3 {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+    padding: 0 10px;
+}
+
+.book-card h3 a {
+    text-decoration: none;
+    color: #0073e6;
+}
+
+.book-card h3 a:hover {
+    text-decoration: underline;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0 15px;
+}
+
+/* フッター */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    font-size: 14px;
+}

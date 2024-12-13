@@ -70,7 +70,7 @@ main select {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 200px;
+    width: 180px;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -82,19 +82,20 @@ main select {
 
 /* 本の画像 */
 .book-card img {
-    width: 100px;
-    height: 150px;
-    margin: 20px auto;
+    width: auto;
+    height: 90px;
+    margin-top: 5px;
     border-radius: 4px;
     object-fit: cover;
 }
 
 /* 本のタイトルと著者 */
 .book-card h3 {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
-    margin: 10px 0;
+    margin: 0 0;
     padding: 0 10px;
+    margin-bottom: 5px;
 }
 
 .book-card h3 a {

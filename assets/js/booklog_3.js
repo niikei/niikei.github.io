@@ -27,7 +27,6 @@ function displayBooks(json) {
         <div class="book-card">
             <img src="${book.image}" alt="${book.title}" />
             <h3><a href="${book.url}" target="_blank">${book.title}</a></h3>
-            <p>${book.author}</p>
         </div>
     `).join('');
     bookshelf.innerHTML = booksHtml;

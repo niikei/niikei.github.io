@@ -71,6 +71,20 @@ function parseDateValue(value) {
   return date;
 }
 
+function parseTags(value) {
+  if (!value) return [];
+  const trimmed = String(value).trim();
+  if (!trimmed) return [];
+
+  const unwrapped =
+    trimmed.startsWith("[") && trimmed.endsWith("]") ? trimmed.slice(1, -1).trim() : trimmed;
+
+  return unwrapped
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
 async function buildIndex() {
   const entries = await readdir(POSTS_DIR, { withFileTypes: true });
   const files = entries
@@ -92,6 +106,7 @@ async function buildIndex() {
       title,
       date: date ? date.toISOString().slice(0, 10) : dateString,
       excerpt: meta.excerpt || makeExcerpt(body),
+      tags: parseTags(meta.tags),
       file,
     });
   }

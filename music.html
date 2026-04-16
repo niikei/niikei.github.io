@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>記事 | niikei</title>
-    <meta name="description" content="niikei の記事一覧（Markdown 管理）。">
+    <title>音楽 | niikei</title>
+    <meta name="description" content="niikei の音楽ページ。プレイリスト、メモ、音楽関連の記事。">
     <script>
         (() => {
             try {
@@ -51,13 +51,38 @@
     <main class="container">
         <section class="hero" style="padding-bottom: 0;">
             <div class="card">
-                <h1 style="margin: 0 0 6px;">記事</h1>
-                <p style="margin: 0; color: var(--muted);">記事は <code>posts/*.md</code> で管理しています。</p>
+                <div class="panel-hero">
+                    <img class="panel-hero__icon" src="assets/images/niikei_music_icon.png" alt="Music">
+                    <div>
+                        <h1 class="panel-hero__title">Music</h1>
+                        <p class="panel-hero__lead">音楽まわりのリンクとメモ。記事は <code>tags: music</code> で集約します。</p>
+                        <div class="panel-links" style="margin-top: 14px;">
+                            <a class="tile" href="templates/spotify.html">
+                                <div>
+                                    <div class="tile__title">Spotify</div>
+                                    <div class="tile__meta">よく聴くもの</div>
+                                </div>
+                                <span aria-hidden="true">→</span>
+                            </a>
+
+                            <a class="tile" href="templates/youtube.html">
+                                <div>
+                                    <div class="tile__title">YouTube</div>
+                                    <div class="tile__meta">お気に入り</div>
+                                </div>
+                                <span aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="section">
-            <div id="all-posts" class="post-list" aria-live="polite"></div>
+            <h2 style="margin: 0 0 12px; font-size: 18px; letter-spacing: 0.02em;">音楽関連の記事</h2>
+            <div id="music-posts" class="post-list" data-posts-tag="music"
+                data-posts-empty="音楽関連の記事はまだありません。posts/*.md に tags: music を付けて追加できます。" aria-live="polite">
+            </div>
         </section>
     </main>
 

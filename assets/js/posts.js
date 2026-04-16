@@ -232,8 +232,13 @@
     return `${yyyy}-${mm}-${dd}`;
   }
 
-  function renderPostList(container, posts, { limit = null } = {}) {
+  function renderPostList(container, posts, { limit = null, emptyMessage = "記事がありません。" } = {}) {
     const slice = limit ? posts.slice(0, limit) : posts;
+    if (slice.length === 0) {
+      container.innerHTML = `<p class="muted">${escapeHtml(emptyMessage)}</p>`;
+      return;
+    }
+
     container.innerHTML = slice
       .map((post) => {
         const title = escapeHtml(post.title);
@@ -250,6 +255,26 @@
         `.trim();
       })
       .join("\n");
+  }
+
+  function getTagContainers() {
+    return Array.from(document.querySelectorAll("[data-posts-tag]"));
+  }
+
+  function parseTagsValue(value) {
+    if (!value) return [];
+    return String(value)
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+  }
+
+  function filterByTags(posts, tags) {
+    if (!Array.isArray(posts) || tags.length === 0) return [];
+    return posts.filter((post) => {
+      const postTags = Array.isArray(post.tags) ? post.tags : [];
+      return tags.some((tag) => postTags.includes(tag));
+    });
   }
 
   async function renderSinglePost({ index, slug, titleEl, dateEl, contentEl }) {
@@ -274,14 +299,22 @@
     const postTitle = document.getElementById("post-title");
     const postDate = document.getElementById("post-date");
     const postContent = document.getElementById("post-content");
+    const tagContainers = getTagContainers();
 
-    if (!latest && !all && !postContent) return;
+    if (!latest && !all && !postContent && tagContainers.length === 0) return;
 
     try {
       const index = await loadIndex();
 
       if (latest) renderPostList(latest, index.posts, { limit: 5 });
       if (all) renderPostList(all, index.posts);
+
+      for (const container of tagContainers) {
+        const tags = parseTagsValue(container.dataset.postsTag);
+        const emptyMessage = container.dataset.postsEmpty || "記事がありません。";
+        const filtered = filterByTags(index.posts, tags);
+        renderPostList(container, filtered, { emptyMessage });
+      }
 
       if (postContent) {
         const slug = new URLSearchParams(window.location.search).get("post");

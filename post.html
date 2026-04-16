@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>niikei</title>
-    <meta name="description" content="niikei のメモとリンク集。ソフトウェア、読書、音楽など。">
+    <title>記事 | niikei</title>
+    <meta name="description" content="niikei の記事（Markdown 管理）。">
     <script>
         (() => {
             try {
@@ -41,9 +41,6 @@
                     <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
                         <img src="assets/images/github_icon.png" alt="GitHub">
                     </a>
-                    <a href="https://www.instagram.com/n11_ke1/" target="_blank" rel="noopener noreferrer">
-                        <img src="assets/images/instagram_icon.png" alt="Instagram">
-                    </a>
                     <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
                         <img src="assets/images/zenn_icon.svg" alt="Zenn">
                     </a>
@@ -53,52 +50,18 @@
     </header>
 
     <main class="container">
-        <section class="hero">
-            <div class="hero__grid">
-                <div class="card">
-                    <h1>メモとリンク集</h1>
-                    <p>ソフトウェア、読書、音楽。作ったものや日々のメモをまとめています。</p>
-                </div>
-
-                <div class="card">
-                    <div class="section" style="padding: 0;">
-                        <h2>最新記事</h2>
-                        <div id="latest-posts" class="post-list" aria-live="polite"></div>
-                        <div style="margin-top: 12px;">
-                            <a class="button" href="posts.html">記事一覧へ</a>
-                        </div>
-                    </div>
-                </div>
+        <section class="hero" style="padding-bottom: 0;">
+            <div class="card">
+                <a href="posts.html" style="color: var(--muted); text-decoration: none;">← 記事一覧</a>
+                <h1 id="post-title" style="margin: 12px 0 6px;"></h1>
+                <div id="post-date" class="post-item__date"></div>
             </div>
         </section>
 
         <section class="section">
-            <h2>リンク</h2>
-            <div class="grid">
-                <a class="tile" href="templates/booklog.html">
-                    <div>
-                        <div class="tile__title">本棚（仮）</div>
-                        <div class="tile__meta">ブクログ連携</div>
-                    </div>
-                    <span aria-hidden="true">→</span>
-                </a>
-
-                <a class="tile" href="templates/youtube.html">
-                    <div>
-                        <div class="tile__title">YouTube</div>
-                        <div class="tile__meta">お気に入り</div>
-                    </div>
-                    <span aria-hidden="true">→</span>
-                </a>
-
-                <a class="tile" href="templates/spotify.html">
-                    <div>
-                        <div class="tile__title">Spotify</div>
-                        <div class="tile__meta">よく聴くもの</div>
-                    </div>
-                    <span aria-hidden="true">→</span>
-                </a>
-            </div>
+            <article class="card prose">
+                <div id="post-content"></div>
+            </article>
         </section>
     </main>
 

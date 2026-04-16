@@ -4,40 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currently Reading</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>本棚 | niikei</title>
+    <meta name="description" content="Booklog と連携した本棚ページ。カテゴリ/ステータスで絞り込みできます。">
+    <script>
+        (() => {
+            try {
+                const saved = localStorage.getItem("theme");
+                const theme = saved === "light" || saved === "dark"
+                    ? saved
+                    : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.dataset.theme = theme;
+            } catch { }
+        })();
+    </script>
+    <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 
 <body>
-    <header>
-        <a href="../index.html">Back to Home</a>
-    </header>
-    <main>
-        <h2>本棚 (仮)</h2>
-        <div style="text-align: center;">
-            <label for="category">Category:</label>
-            <select id="category">
-                <option value="0">All</option>
-                <option value="3670563">文芸書</option>
-                <option value="3670562">技術書</option>
-                <option value="3670565">人文書</option>
-                <option value="3670564">漫画</option>
-            </select>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a class="brand" href="../index.html">
+                <img class="brand__avatar" src="../assets/images/niikei_personal_icon.png" alt="niikei">
+                <span class="brand__name">niikei</span>
+            </a>
 
-            <label for="status">Status:</label>
-            <select id="status">
-                <option value="0">All</option>
-                <option value="1">読みたい</option>
-                <option value="2">いま読んでる</option>
-                <option value="3">読み終わった</option>
-            </select>
+            <nav class="nav" aria-label="メイン">
+                <a href="booklog.html" aria-current="page">本棚</a>
+                <a href="../music.html">音楽</a>
+                <a href="../posts.html">記事</a>
+            </nav>
+
+            <div class="nav__actions">
+                <button id="theme-toggle" class="button button--ghost" type="button" aria-pressed="false">ダーク</button>
+                <div class="social" aria-label="外部リンク">
+                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
+                        <img src="../assets/images/github_icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
+                        <img src="../assets/images/zenn_icon.svg" alt="Zenn">
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- align="center"は削除し、CSSで中央揃えを実現 -->
-        <div id="bookshelf"></div>
+    </header>
+
+    <main class="container">
+        <section class="hero" style="padding-bottom: 0;">
+            <div class="card card--glow card--glow-personal">
+                <h1 style="margin: 0 0 6px;">本棚</h1>
+                <p class="muted" style="margin: 0;">Booklog のデータを取得して、こちらでデザインして表示します。</p>
+
+                <div class="bookshelf-controls" aria-label="絞り込み">
+                    <label class="field" for="category">
+                        <span class="field__label">カテゴリ</span>
+                        <select id="category" class="select">
+                            <option value="0">すべて</option>
+                            <option value="3670563">文芸書</option>
+                            <option value="3670562">技術書</option>
+                            <option value="3670565">人文書</option>
+                            <option value="3670564">漫画</option>
+                        </select>
+                    </label>
+
+                    <label class="field" for="status">
+                        <span class="field__label">ステータス</span>
+                        <select id="status" class="select">
+                            <option value="0">すべて</option>
+                            <option value="1">読みたい</option>
+                            <option value="2">いま読んでる</option>
+                            <option value="3">読み終わった</option>
+                        </select>
+                    </label>
+
+                    <label class="field" for="count">
+                        <span class="field__label">表示件数</span>
+                        <select id="count" class="select">
+                            <option value="12">12</option>
+                            <option value="24" selected>24</option>
+                            <option value="48">48</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div id="bookshelf-status" class="muted" aria-live="polite" style="margin-top: 10px;"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div id="bookshelf" class="book-grid" aria-live="polite"></div>
+        </section>
     </main>
-    <footer>
-        <p>&copy; 2024 niikei</p>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div>&copy; 2024 niikei</div>
+        </div>
     </footer>
+
+    <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/booklog.js"></script>
 </body>
 

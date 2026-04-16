@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Booklog Minishelf - niikei</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/booklog_2.css">
+</head>
+
+<body>
+
+    <h1>niikeiの本棚</h1>
+    <div id="recent_books" class="book-container"></div>
+
+    <!-- niikeiの本棚JSONデータを取得 -->
+    <script src="https://api.booklog.jp/json/niikei?category=0&count=10&callback=booklog_minishelf"></script>
+    <script src="../assets/js/booklog_2.js"></script>
+</body>
+
+</html>

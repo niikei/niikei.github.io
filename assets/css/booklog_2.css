@@ -1,0 +1,79 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    font-weight: normal;
+    margin-bottom: 40px;
+    font-size: 28px;
+    color: #444;
+}
+
+/* 本棚全体のコンテナ */
+.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 各本をカード状に表示 */
+.book {
+    background: #fff;
+    border-radius: 4px;
+    margin: 10px;
+    width: 280px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 本の画像部分 */
+.book_image {
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.book_image img {
+    border-radius: 3px;
+    width: 52px;
+    height: 75px;
+    object-fit: cover;
+}
+
+/* タイトル部分 */
+.book_title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.book_title a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.book_title a:hover {
+    text-decoration: underline;
+}
+
+/* 著者名 */
+.book_author {
+    font-size: 14px;
+    font-weight: normal;
+    color: #666;
+}

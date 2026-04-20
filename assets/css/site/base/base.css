@@ -46,6 +46,7 @@ body {
 
 body {
   margin: 0;
+  padding-top: 72px;
   color: var(--text);
   background:
     radial-gradient(1200px 700px at -12% -18%, color-mix(in oklab, var(--accent), transparent 86%), transparent 72%),
@@ -78,6 +79,10 @@ a {
 }
 
 @media (max-width: 680px) {
+  body {
+    padding-top: 64px;
+  }
+
   body {
     background-attachment: scroll, scroll, scroll, scroll;
   }

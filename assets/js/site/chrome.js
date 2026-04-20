@@ -61,12 +61,39 @@
             <span class="brand__name">niikei</span>
           </a>
 
+          <button
+            id="menu-toggle"
+            class="button button--ghost icon-button site-header__menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-mobile-menu"
+            aria-label="メニューを開く"
+            title="メニューを開く"
+          >
+            <i data-lucide="menu" class="icon" aria-hidden="true"></i>
+          </button>
+
           <nav class="nav" aria-label="メイン">
             ${nav}
           </nav>
 
           <div class="nav__actions">
-            <button id="theme-toggle" class="button button--ghost icon-button" type="button" aria-pressed="false" aria-label="テーマ切り替え" title="テーマ切り替え">
+            <button data-theme-toggle class="button button--ghost icon-button" type="button" aria-pressed="false" aria-label="テーマ切り替え" title="テーマ切り替え">
+              <i data-lucide="moon" class="icon" aria-hidden="true"></i>
+            </button>
+            <div class="social" aria-label="外部リンク">
+              ${social}
+            </div>
+          </div>
+        </div>
+
+        <div id="site-mobile-menu" class="site-header__mobile-menu" hidden>
+          <nav class="nav site-header__mobile-nav" aria-label="メイン">
+            ${nav}
+          </nav>
+
+          <div class="nav__actions site-header__mobile-actions">
+            <button data-theme-toggle class="button button--ghost icon-button" type="button" aria-pressed="false" aria-label="テーマ切り替え" title="テーマ切り替え">
               <i data-lucide="moon" class="icon" aria-hidden="true"></i>
             </button>
             <div class="social" aria-label="外部リンク">

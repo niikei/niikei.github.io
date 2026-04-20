@@ -19,7 +19,12 @@
   }
 
   function getSystemTheme() {
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return (
+        window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) ?
+        "dark"
+      : "light";
   }
 
   function getInitialTheme() {
@@ -29,7 +34,8 @@
   }
 
   function renderLucideIcons() {
-    if (!window.lucide || typeof window.lucide.createIcons !== "function") return false;
+    if (!window.lucide || typeof window.lucide.createIcons !== "function")
+      return false;
     window.lucide.createIcons({
       attrs: {
         "stroke-width": 1.8,
@@ -41,21 +47,27 @@
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
 
-    const toggle = document.getElementById("theme-toggle");
-    if (!toggle) return;
-
     const isDark = theme === "dark";
-    toggle.setAttribute("aria-pressed", String(isDark));
-    const nextLabel = isDark ? "ライトモードに切り替え" : "ダークモードに切り替え";
-    toggle.setAttribute("aria-label", nextLabel);
-    toggle.setAttribute("title", nextLabel);
+    const nextLabel =
+      isDark ? "ライトモードに切り替え" : "ダークモードに切り替え";
     const iconName = isDark ? "sun" : "moon";
-    toggle.innerHTML = `<i data-lucide="${iconName}" class="icon" aria-hidden="true"></i>`;
-    if (!renderLucideIcons()) toggle.textContent = isDark ? "☀" : "🌙";
+    const toggles = document.querySelectorAll("[data-theme-toggle]");
+    for (const toggle of toggles) {
+      toggle.setAttribute("aria-pressed", String(isDark));
+      toggle.setAttribute("aria-label", nextLabel);
+      toggle.setAttribute("title", nextLabel);
+      toggle.innerHTML = `<i data-lucide="${iconName}" class="icon" aria-hidden="true"></i>`;
+    }
+    if (!renderLucideIcons()) {
+      for (const toggle of toggles) {
+        toggle.textContent = isDark ? "☀" : "🌙";
+      }
+    }
   }
 
   function toggleTheme() {
-    const current = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    const current =
+      document.documentElement.dataset.theme === "dark" ? "dark" : "light";
     const next = current === "dark" ? "light" : "dark";
     safeSetItem(STORAGE_KEY, next);
     applyTheme(next);
@@ -65,10 +77,45 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     renderLucideIcons();
-    const toggle = document.getElementById("theme-toggle");
-    if (toggle) toggle.addEventListener("click", toggleTheme);
+    const toggles = document.querySelectorAll("[data-theme-toggle]");
+    for (const toggle of toggles) {
+      toggle.addEventListener("click", toggleTheme);
+    }
 
-    const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("site-mobile-menu");
+    if (menuToggle && mobileMenu) {
+      const setMenuState = (open) => {
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute(
+          "aria-label",
+          open ? "メニューを閉じる" : "メニューを開く",
+        );
+        menuToggle.setAttribute(
+          "title",
+          open ? "メニューを閉じる" : "メニューを開く",
+        );
+        mobileMenu.hidden = !open;
+      };
+
+      setMenuState(false);
+
+      menuToggle.addEventListener("click", () => {
+        setMenuState(menuToggle.getAttribute("aria-expanded") !== "true");
+      });
+
+      mobileMenu.addEventListener("click", (event) => {
+        const target = event.target instanceof Element ? event.target : null;
+        if (target && target.closest("a, button")) {
+          setMenuState(false);
+        }
+      });
+    }
+
+    const media =
+      window.matchMedia ?
+        window.matchMedia("(prefers-color-scheme: dark)")
+      : null;
     if (!media) return;
 
     media.addEventListener("change", () => {

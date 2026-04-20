@@ -1,52 +1,301 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const categorySelect = document.getElementById("category");
-    const statusSelect = document.getElementById("status");
-    const bookshelf = document.getElementById("bookshelf");
+document.addEventListener("DOMContentLoaded", () => {
+  const categorySelect = document.getElementById("category");
+  const statusSelect = document.getElementById("status");
+  const countSelect = document.getElementById("count");
+  const bookshelf = document.getElementById("bookshelf");
+  const status = document.getElementById("bookshelf-status");
+  const filterSummary = document.getElementById("bookshelf-filter-summary");
+  const advancedFilters = document.getElementById("bookshelf-advanced");
+  const layoutButtons = Array.from(
+    document.querySelectorAll("[data-bookshelf-layout]"),
+  );
 
-    const resizeBookshelf = () => {
-        const headerHeight = document.querySelector('header').offsetHeight;
-        const footerHeight = document.querySelector('footer').offsetHeight;
-        const availableHeight = window.innerHeight - headerHeight - footerHeight;
+  if (!(categorySelect instanceof HTMLSelectElement)) return;
+  if (!(statusSelect instanceof HTMLSelectElement)) return;
+  if (!(bookshelf instanceof HTMLElement)) return;
 
-        // コンソールで値を確認
-        console.log("headerHeight:", headerHeight, "footerHeight:", footerHeight, "availableHeight:", availableHeight);
+  const USER = "niikei";
+  const SCRIPT_ID = "booklog-jsonp";
+  const LAYOUT_KEY = "booklog-layout";
+  const FILTER_PANEL_KEY = "booklog-filters-open";
 
-        bookshelf.style.height = `${availableHeight}px`;
+  let requestCounter = 0;
+  let currentLayout = getInitialLayout();
+
+  function supportsCompactList() {
+    return window.matchMedia("(max-width: 680px)").matches;
+  }
+
+  function getInitialLayout() {
+    const saved = window.localStorage.getItem(LAYOUT_KEY);
+    if (saved === "grid" || saved === "list") return saved;
+    return supportsCompactList() ? "list" : "grid";
+  }
+
+  function saveLayout(layout) {
+    window.localStorage.setItem(LAYOUT_KEY, layout);
+  }
+
+  function applyLayout(layout) {
+    currentLayout = layout;
+    bookshelf.dataset.layout = layout;
+    saveLayout(layout);
+
+    for (const button of layoutButtons) {
+      const isActive = button.dataset.bookshelfLayout === layout;
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    }
+  }
+
+  function syncLayoutWithViewport() {
+    if (window.localStorage.getItem(LAYOUT_KEY)) return;
+    applyLayout(supportsCompactList() ? "list" : "grid");
+  }
+
+  function getCategoryLabel(value) {
+    const categories = {
+      0: "すべて",
+      3670563: "文芸書",
+      3670562: "技術書",
+      3670565: "人文書",
+      3670564: "漫画",
     };
+    return categories[String(value)] || "すべて";
+  }
 
-    function fetchBooks() {
-        const category = categorySelect.value;
-        const status = statusSelect.value;
+  function getStatusLabel(value) {
+    const statuses = {
+      0: "すべて",
+      1: "読みたい",
+      2: "いま読んでる",
+      3: "読み終わった",
+    };
+    return statuses[String(value)] || "すべて";
+  }
 
-        // 既存の書棚クリア
-        bookshelf.innerHTML = "";
+  function updateFilterSummary() {
+    if (!(filterSummary instanceof HTMLElement)) return;
+    const countValue =
+      countSelect instanceof HTMLSelectElement ? countSelect.value : "24";
+    const parts = [
+      `カテゴリ: ${getCategoryLabel(categorySelect.value)}`,
+      `ステータス: ${getStatusLabel(statusSelect.value)}`,
+      `表示件数: ${countValue}件`,
+    ];
+    filterSummary.textContent = parts.join(" / ");
+  }
 
-        // 既存スクリプト削除
-        const existingScript = document.getElementById("booklog_minishelf");
-        if (existingScript) existingScript.remove();
+  function syncAdvancedPanel() {
+    if (!(advancedFilters instanceof HTMLDetailsElement)) return;
+    const saved = window.localStorage.getItem(FILTER_PANEL_KEY);
+    if (saved === "open") {
+      advancedFilters.open = true;
+      return;
+    }
+    if (saved === "closed") {
+      advancedFilters.open = false;
+      return;
+    }
+    advancedFilters.open = !supportsCompactList();
+  }
 
-        // Booklog用スクリプト
-        const script1 = document.createElement("script");
-        script1.type = "text/javascript";
-        script1.src = "https://widget.booklog.jp/blogparts/js/booklog_minishelf.js?black_disp";
-        script1.id = "booklog_minishelf";
+  function saveAdvancedPanelState() {
+    if (!(advancedFilters instanceof HTMLDetailsElement)) return;
+    window.localStorage.setItem(
+      FILTER_PANEL_KEY,
+      advancedFilters.open ? "open" : "closed",
+    );
+  }
 
-        const script2 = document.createElement("script");
-        script2.type = "text/javascript";
-        script2.src = `https://api.booklog.jp/json/niikei?category=${category}&status=${status}&callback=booklog_minishelf`;
+  function setBusy(isBusy) {
+    bookshelf.setAttribute("aria-busy", isBusy ? "true" : "false");
+  }
 
-        bookshelf.appendChild(script1);
-        bookshelf.appendChild(script2);
+  function setStatusMessage(message) {
+    if (!status) return;
+    status.textContent = message;
+  }
+
+  function safeUrl(url) {
+    const trimmed = String(url || "").trim();
+    if (!trimmed) return null;
+    const lower = trimmed.toLowerCase();
+    if (lower.startsWith("javascript:") || lower.startsWith("data:"))
+      return null;
+    return trimmed;
+  }
+
+  function normalizeImageUrl(url) {
+    const safe = safeUrl(url);
+    if (!safe) return null;
+    return safe.replace(/^http:\/\//i, "https://");
+  }
+
+  function clearBookshelf(message = "") {
+    bookshelf.innerHTML = "";
+    if (!message) return;
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = message;
+    bookshelf.appendChild(p);
+  }
+
+  function renderBooks(books) {
+    bookshelf.innerHTML = "";
+
+    const fragment = document.createDocumentFragment();
+    for (const book of books) {
+      const href = safeUrl(book?.url);
+      if (!href) continue;
+
+      const card = document.createElement("a");
+      card.className = "book-card";
+      card.href = href;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+
+      const titleText = String(book?.title || "Untitled");
+      const authorText = String(book?.author || "");
+
+      const imageUrl = normalizeImageUrl(book?.image);
+      if (imageUrl) {
+        const img = document.createElement("img");
+        img.className = "book-card__image";
+        img.src = imageUrl;
+        img.alt = `${titleText} の表紙`;
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.referrerPolicy = "no-referrer";
+        card.appendChild(img);
+      }
+
+      const body = document.createElement("div");
+      body.className = "book-card__body";
+
+      const title = document.createElement("div");
+      title.className = "book-card__title";
+      title.textContent = titleText;
+      body.appendChild(title);
+
+      if (authorText) {
+        const author = document.createElement("div");
+        author.className = "book-card__meta";
+        author.textContent = authorText;
+        body.appendChild(author);
+      }
+
+      card.appendChild(body);
+      fragment.appendChild(card);
     }
 
-    // 初期設定
-    resizeBookshelf();
-    fetchBooks();
+    if (fragment.childNodes.length === 0) {
+      clearBookshelf("表示できる本がありません。");
+      return;
+    }
 
-    // ウィンドウサイズ変更時に本棚サイズ更新
-    window.addEventListener('resize', resizeBookshelf);
+    bookshelf.appendChild(fragment);
+  }
 
-    // カテゴリー・ステータス変更時に更新
-    categorySelect.addEventListener("change", fetchBooks);
-    statusSelect.addEventListener("change", fetchBooks);
+  function cleanupCallback(callbackName) {
+    window.setTimeout(() => {
+      try {
+        delete window[callbackName];
+      } catch {}
+    }, 0);
+  }
+
+  function fetchBooks() {
+    const category = categorySelect.value;
+    const statusValue = statusSelect.value;
+    const countValue =
+      countSelect instanceof HTMLSelectElement ? countSelect.value : "24";
+
+    updateFilterSummary();
+
+    requestCounter += 1;
+    const currentRequest = requestCounter;
+
+    setBusy(true);
+    setStatusMessage("読み込み中…");
+    clearBookshelf("");
+
+    const callbackName = `__booklog_cb_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+
+    window[callbackName] = (json) => {
+      try {
+        if (currentRequest !== requestCounter) return;
+
+        const books = Array.isArray(json?.books) ? json.books : [];
+        if (books.length === 0) {
+          setStatusMessage("該当する本がありません。");
+          clearBookshelf("該当する本がありません。");
+          return;
+        }
+
+        setStatusMessage(`${books.length}件 表示`);
+        renderBooks(books);
+      } finally {
+        if (currentRequest === requestCounter) setBusy(false);
+        cleanupCallback(callbackName);
+      }
+    };
+
+    const existingScript = document.getElementById(SCRIPT_ID);
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement("script");
+    script.id = SCRIPT_ID;
+    script.async = true;
+    script.onerror = () => {
+      if (currentRequest !== requestCounter) {
+        cleanupCallback(callbackName);
+        return;
+      }
+      setBusy(false);
+      setStatusMessage("読み込みに失敗しました。");
+      clearBookshelf(
+        "読み込みに失敗しました。時間をおいて再度お試しください。",
+      );
+      cleanupCallback(callbackName);
+    };
+
+    const url =
+      `https://api.booklog.jp/json/${encodeURIComponent(USER)}` +
+      `?category=${encodeURIComponent(category)}` +
+      `&status=${encodeURIComponent(statusValue)}` +
+      `&count=${encodeURIComponent(countValue)}` +
+      `&callback=${encodeURIComponent(callbackName)}` +
+      `&_=${Date.now()}`;
+    script.src = url;
+
+    document.body.appendChild(script);
+  }
+
+  categorySelect.addEventListener("change", fetchBooks);
+  statusSelect.addEventListener("change", fetchBooks);
+  if (countSelect instanceof HTMLSelectElement)
+    countSelect.addEventListener("change", fetchBooks);
+
+  if (advancedFilters instanceof HTMLDetailsElement) {
+    advancedFilters.addEventListener("toggle", saveAdvancedPanelState);
+  }
+
+  for (const button of layoutButtons) {
+    button.addEventListener("click", () => {
+      const layout = button.dataset.bookshelfLayout;
+      if (layout !== "grid" && layout !== "list") return;
+      applyLayout(layout);
+    });
+  }
+
+  window.matchMedia("(max-width: 680px)").addEventListener("change", () => {
+    syncLayoutWithViewport();
+    syncAdvancedPanel();
+  });
+
+  applyLayout(currentLayout);
+  syncAdvancedPanel();
+  updateFilterSummary();
+
+  fetchBooks();
 });

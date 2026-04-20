@@ -1,0 +1,135 @@
+/* Bookshelf: book grid and book card components */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.book-grid[data-layout="list"] {
+  grid-template-columns: 1fr;
+}
+
+.book-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 12px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.book-card:hover {
+  border-color: color-mix(in oklab, var(--accent), var(--border) 45%);
+  transform: translateY(-1px);
+}
+
+.book-grid[data-layout="list"] .book-card {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.book-grid[data-layout="list"] .book-card__image {
+  width: 84px;
+  flex: 0 0 84px;
+  aspect-ratio: 3 / 4;
+}
+
+.book-grid[data-layout="list"] .book-card__body {
+  flex: 1;
+}
+
+.book-card__image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+}
+
+.book-card__body {
+  display: grid;
+  gap: 6px;
+}
+
+.book-card__title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.book-card__meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.bookshelf-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bookshelf-layout__buttons {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.bookshelf-layout__button {
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.bookshelf-layout__button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: color-mix(in oklab, var(--accent), black 15%);
+  color: #f5fffd;
+}
+
+@media (max-width: 680px) {
+  .book-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .book-grid[data-layout="list"] {
+    grid-template-columns: 1fr;
+  }
+
+  .bookshelf-layout {
+    align-items: flex-start;
+  }
+
+  .bookshelf-layout__buttons {
+    width: 100%;
+  }
+
+  .bookshelf-layout__button {
+    flex: 1;
+  }
+
+  .book-card {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .book-grid[data-layout="list"] .book-card {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .book-card__title {
+    font-size: 13px;
+  }
+
+  .book-card__meta {
+    font-size: 11px;
+  }
+}

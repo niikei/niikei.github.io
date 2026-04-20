@@ -1,0 +1,219 @@
+/* Header: site-header, brand, navigation */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  border-bottom: 1px solid color-mix(in oklab, var(--border), transparent 20%);
+  background: color-mix(in oklab, var(--bg), transparent 6%);
+  backdrop-filter: blur(8px);
+}
+
+.site-header__desktop,
+.site-header__mobile {
+  min-height: 72px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.site-header__mobile {
+  display: none;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  object-fit: cover;
+}
+
+.brand__name {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav a {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 12px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--muted);
+  transition: 0.16s ease;
+}
+
+.nav .icon-link {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.site-header__menu-toggle {
+  display: none;
+  margin-left: auto;
+}
+
+.site-header__mobile-theme-toggle {
+  display: none;
+}
+
+.site-header__mobile-menu {
+  display: none;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social a {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.16s ease;
+}
+
+.social a:hover {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.social img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+:root[data-theme="dark"] .social img[alt="GitHub"] {
+  filter: invert(1) brightness(1.12);
+}
+
+@media (max-width: 680px) {
+  .site-header__desktop {
+    display: none;
+  }
+
+  .site-header__mobile {
+    display: flex;
+    min-height: 64px;
+    padding: 10px 0;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .nav__actions {
+    display: none;
+  }
+
+  .site-header__mobile-theme-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .site-header__menu-toggle {
+    display: inline-flex;
+    margin-left: 0;
+  }
+
+  .site-header__mobile-menu {
+    display: grid;
+    gap: 12px;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 12px;
+    left: auto;
+    width: min(320px, calc(100% - 24px));
+    padding: 12px;
+    border-bottom: 1px solid color-mix(in oklab, var(--border), transparent 20%);
+    background: color-mix(in oklab, var(--bg), transparent 2%);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow);
+  }
+
+  .site-header__mobile-menu[hidden] {
+    display: none;
+  }
+
+  .site-header__mobile-nav {
+    display: grid;
+    width: 100%;
+    overflow: visible;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .site-header__mobile-nav a {
+    width: 100%;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .site-header__mobile-nav .icon-link {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-end;
+    padding-right: 12px;
+  }
+
+  .site-header__mobile-actions {
+    display: flex;
+    margin-left: 0;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+}

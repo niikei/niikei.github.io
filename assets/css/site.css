@@ -1,0 +1,25 @@
+/* Main stylesheet - component imports */
+
+@import url("site/base/base.css");
+@import url("site/base/typography.css");
+@import url("site/utilities/layout.css");
+@import url("site/components/navigation/header.css");
+@import url("site/components/content/page-intro.css");
+@import url("site/components/content/hero.css");
+@import url("site/components/content/section.css");
+@import url("site/components/content/form.css");
+@import url("site/components/content/prose.css");
+@import url("site/components/content/bookshelf.css");
+@import url("site/components/content/footer.css");
+@import url("site/components/ui/button.css");
+@import url("site/components/ui/disclosure.css");
+@import url("site/components/ui/card.css");
+@import url("site/components/ui/post-list.css");
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

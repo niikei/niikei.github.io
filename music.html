@@ -3,69 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>niikei</title>
+    <title>音楽 | niikei</title>
     <meta
       name="description"
-      content="niikei の個人サイト。ソフトウェア、読書、音楽の記録。"
+      content="niikei の音楽ページ。音楽タグの記事やメモをまとめています。"
     />
     <script src="assets/js/site/theme-bootstrap.js"></script>
     <link rel="stylesheet" href="assets/css/site.css" />
   </head>
 
-  <body data-page="home">
+  <body data-page="music">
     <div data-site-header></div>
 
     <main class="container">
-      <section class="hero hero--home">
-        <img
-          class="hero-icon hero-icon--home"
-          src="assets/images/niikei_personal_icon.png"
-          alt="niikei のアイコン"
-        />
-
-        <div class="hero-content">
+      <section class="hero">
+        <div class="hero-main">
           <div class="stack stack--lg">
             <div>
-              <p class="eyebrow">Personal Site</p>
-              <h1 class="hero-title">niikei</h1>
-              <p class="hero-copy">
-                音楽、読書、IT
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <article class="card feature">
-          <img
-            class="feature__image"
-            src="assets/images/niikei_music_icon.png"
-            alt="Music"
-          />
-          <div class="stack">
-            <div>
               <p class="eyebrow">Music</p>
-              <h2 class="section-title">音楽ページ</h2>
-              <p class="section-lead">
-                音楽タグの記事やメモをまとめた専用ページです。
+              <h1 class="hero-title">音楽メモ</h1>
+              <p class="hero-copy">
+                音楽関連の記事をここに集約しています。
               </p>
             </div>
-            <div>
-              <a class="button button--accent" href="music.html"
-                >音楽ページを開く</a
-              >
-            </div>
           </div>
-        </article>
+
+          <img
+            class="hero-icon"
+            src="assets/images/niikei_music_icon.png"
+            alt="Music アイコン"
+          />
+        </div>
       </section>
 
       <section class="section">
         <div class="section-head">
-          <h2 class="section-title">最新記事</h2>
-          <a class="button" href="posts.html">記事一覧</a>
+          <h2 class="section-title">音楽関連の記事</h2>
         </div>
-        <div id="latest-posts" class="post-list" aria-live="polite"></div>
+        <div
+          id="music-posts"
+          class="post-list"
+          data-posts-tag="music"
+          data-posts-empty="音楽関連の記事はまだありません。posts/*.md に tags: music を付けて追加できます。"
+          aria-live="polite"
+        ></div>
       </section>
     </main>
 

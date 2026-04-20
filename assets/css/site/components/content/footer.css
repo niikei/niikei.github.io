@@ -1,0 +1,7 @@
+/* Footer: site footer styling */
+
+.site-footer {
+  padding: 32px 0 48px;
+  color: var(--muted);
+  font-size: 13px;
+}

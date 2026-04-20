@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>記事 | niikei</title>
+    <meta name="description" content="niikei の記事ページ。" />
+    <script src="assets/js/site/theme-bootstrap.js"></script>
+    <link rel="stylesheet" href="assets/css/site.css" />
+  </head>
+
+  <body data-page="posts">
+    <div data-site-header></div>
+
+    <main class="container">
+      <section class="hero">
+        <div class="stack stack--lg">
+          <div>
+            <a class="button button--ghost" href="posts.html"
+              >← 記事一覧へ戻る</a
+            >
+          </div>
+          <h1 id="post-title" class="section-title"></h1>
+          <div id="post-date" class="post-item__date"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <article class="card prose">
+          <div id="post-content"></div>
+        </article>
+      </section>
+    </main>
+
+    <div data-site-footer></div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+    <script src="assets/js/site/chrome.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/site/posts-utils.js"></script>
+    <script src="assets/js/site/posts-markdown.js"></script>
+    <script src="assets/js/site/posts-data.js"></script>
+    <script src="assets/js/site/posts-render.js"></script>
+    <script src="assets/js/posts.js"></script>
+  </body>
+</html>

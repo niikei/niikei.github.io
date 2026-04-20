@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>本棚 | niikei</title>
-    <meta name="description" content="Booklog と連携した本棚ページ。カテゴリ/ステータスで絞り込みできます。">
+    <meta name="description" content="Booklog と連携した本棚ページ。カテゴリやステータスで絞り込めます。">
     <script>
         (() => {
             try {
@@ -17,31 +17,35 @@
             } catch { }
         })();
     </script>
-    <link rel="stylesheet" href="../assets/css/site.css">
+    <link rel="stylesheet" href="assets/css/site.css">
 </head>
 
 <body>
     <header class="site-header">
         <div class="container site-header__inner">
-            <a class="brand" href="../index.html">
-                <img class="brand__avatar" src="../assets/images/niikei_personal_icon.png" alt="niikei">
+            <a class="brand" href="index.html">
+                <img class="brand__avatar" src="assets/images/niikei_personal_icon.png" alt="niikei">
                 <span class="brand__name">niikei</span>
             </a>
 
             <nav class="nav" aria-label="メイン">
+                <a href="index.html">ホーム</a>
                 <a href="booklog.html" aria-current="page">本棚</a>
-                <a href="../music.html">音楽</a>
-                <a href="../posts.html">記事</a>
+                <a href="music.html">音楽</a>
+                <a href="posts.html">記事</a>
             </nav>
 
             <div class="nav__actions">
                 <button id="theme-toggle" class="button button--ghost" type="button" aria-pressed="false">ダーク</button>
                 <div class="social" aria-label="外部リンク">
-                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
-                        <img src="../assets/images/github_icon.png" alt="GitHub">
+                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <img src="assets/images/github_icon.png" alt="GitHub">
                     </a>
-                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
-                        <img src="../assets/images/zenn_icon.svg" alt="Zenn">
+                    <a href="https://www.instagram.com/n11_ke1/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <img src="assets/images/instagram_icon.png" alt="Instagram">
+                    </a>
+                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer" aria-label="Zenn">
+                        <img src="assets/images/zenn_icon.svg" alt="Zenn">
                     </a>
                 </div>
             </div>
@@ -49,10 +53,13 @@
     </header>
 
     <main class="container">
-        <section class="hero" style="padding-bottom: 0;">
-            <div class="card card--glow card--glow-personal">
-                <h1 style="margin: 0 0 6px;">本棚</h1>
-                <p class="muted" style="margin: 0;">Booklog のデータを取得して、こちらでデザインして表示します。</p>
+        <section class="hero">
+            <div class="card stack">
+                <div>
+                    <p class="eyebrow">Books</p>
+                    <h1 class="section-title">本棚</h1>
+                    <p class="section-lead">Booklog のデータを読み込み、ここで統一デザインで表示します。</p>
+                </div>
 
                 <div class="bookshelf-controls" aria-label="絞り込み">
                     <label class="field" for="category">
@@ -86,7 +93,7 @@
                     </label>
                 </div>
 
-                <div id="bookshelf-status" class="muted" aria-live="polite" style="margin-top: 10px;"></div>
+                <div id="bookshelf-status" class="muted" aria-live="polite"></div>
             </div>
         </section>
 
@@ -97,12 +104,12 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div>&copy; 2024 niikei</div>
+            <div>&copy; 2026 niikei</div>
         </div>
     </footer>
 
-    <script src="../assets/js/theme.js"></script>
-    <script src="../assets/js/booklog.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/booklog.js"></script>
 </body>
 
 </html>

@@ -29,18 +29,22 @@
             </a>
 
             <nav class="nav" aria-label="メイン">
-                <a href="templates/booklog.html">本棚</a>
+                <a href="index.html">ホーム</a>
+                <a href="booklog.html">本棚</a>
                 <a href="music.html">音楽</a>
-                <a href="posts.html">記事</a>
+                <a href="posts.html" aria-current="page">記事</a>
             </nav>
 
             <div class="nav__actions">
                 <button id="theme-toggle" class="button button--ghost" type="button" aria-pressed="false">ダーク</button>
                 <div class="social" aria-label="外部リンク">
-                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <img src="assets/images/github_icon.png" alt="GitHub">
                     </a>
-                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/n11_ke1/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <img src="assets/images/instagram_icon.png" alt="Instagram">
+                    </a>
+                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer" aria-label="Zenn">
                         <img src="assets/images/zenn_icon.svg" alt="Zenn">
                     </a>
                 </div>
@@ -49,10 +53,11 @@
     </header>
 
     <main class="container">
-        <section class="hero" style="padding-bottom: 0;">
-            <div class="card">
-                <h1 style="margin: 0 0 6px;">記事</h1>
-                <p style="margin: 0; color: var(--muted);">記事は <code>posts/*.md</code> で管理しています。</p>
+        <section class="hero">
+            <div class="card stack">
+                <p class="eyebrow">Posts</p>
+                <h1 class="section-title">記事一覧</h1>
+                <p class="section-lead">記事は <code>posts/*.md</code> に追加すると自動で読み込まれます。</p>
             </div>
         </section>
 
@@ -63,7 +68,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div>&copy; 2024 niikei</div>
+            <div>&copy; 2026 niikei</div>
         </div>
     </footer>
 

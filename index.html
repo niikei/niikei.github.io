@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>niikei</title>
-    <meta name="description" content="niikei のメモとリンク集。ソフトウェア、読書、音楽など。">
+    <meta name="description" content="niikei の個人サイト。ソフトウェア、読書、音楽の記録。">
     <script>
         (() => {
             try {
@@ -29,6 +29,7 @@
             </a>
 
             <nav class="nav" aria-label="メイン">
+                <a href="index.html" aria-current="page">ホーム</a>
                 <a href="booklog.html">本棚</a>
                 <a href="music.html">音楽</a>
                 <a href="posts.html">記事</a>
@@ -37,13 +38,13 @@
             <div class="nav__actions">
                 <button id="theme-toggle" class="button button--ghost" type="button" aria-pressed="false">ダーク</button>
                 <div class="social" aria-label="外部リンク">
-                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <img src="assets/images/github_icon.png" alt="GitHub">
                     </a>
-                    <a href="https://www.instagram.com/n11_ke1/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/n11_ke1/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <img src="assets/images/instagram_icon.png" alt="Instagram">
                     </a>
-                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer" aria-label="Zenn">
                         <img src="assets/images/zenn_icon.svg" alt="Zenn">
                     </a>
                 </div>
@@ -53,77 +54,64 @@
 
     <main class="container">
         <section class="hero">
-            <article class="card card--glow card--glow-personal" aria-label="Personal">
-                <div class="panel-hero panel-hero--stack">
-                    <img class="panel-hero__icon" src="assets/images/niikei_personal_icon.png" alt="niikei">
+            <div class="hero-main">
+                <div class="stack stack--lg">
                     <div>
-                        <h1 class="panel-hero__title">niikei</h1>
-                        <p class="panel-hero__lead">ソフトウェア、読書、音楽。作ったものや日々のメモをまとめています。</p>
+                        <p class="eyebrow">Personal Site</p>
+                        <h1 class="hero-title">niikei</h1>
+                        <p class="hero-copy">ソフトウェア・読書・音楽を中心に、日々の記録をシンプルにまとめています。</p>
+                    </div>
+
+                    <div class="quick-links" aria-label="主要ページ">
+                        <a class="tile" href="posts.html">
+                            <div>
+                                <div class="tile__title">記事</div>
+                                <div class="tile__meta">Markdown で管理</div>
+                            </div>
+                            <span aria-hidden="true">→</span>
+                        </a>
+
+                        <a class="tile" href="booklog.html">
+                            <div>
+                                <div class="tile__title">本棚</div>
+                                <div class="tile__meta">Booklog 連携</div>
+                            </div>
+                            <span aria-hidden="true">→</span>
+                        </a>
+
+                        <a class="tile" href="music.html">
+                            <div>
+                                <div class="tile__title">音楽</div>
+                                <div class="tile__meta">音楽関連の記事</div>
+                            </div>
+                            <span aria-hidden="true">→</span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="panel-links" aria-label="関連ページ">
-                    <a class="tile" href="posts.html">
-                        <div>
-                            <div class="tile__title">記事</div>
-                            <div class="tile__meta">Markdown 管理</div>
-                        </div>
-                        <span aria-hidden="true">→</span>
-                    </a>
-
-                    <a class="tile" href="music.html">
-                        <div>
-                            <div class="tile__title">音楽</div>
-                            <div class="tile__meta">プレイリスト / メモ</div>
-                        </div>
-                        <span aria-hidden="true">→</span>
-                    </a>
-
-                    <a class="tile" href="templates/booklog.html">
-                        <div>
-                            <div class="tile__title">本棚（仮）</div>
-                            <div class="tile__meta">ブクログ連携</div>
-                        </div>
-                        <span aria-hidden="true">→</span>
-                    </a>
-
-                    <a class="tile" href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
-                        <div>
-                            <div class="tile__title">GitHub</div>
-                            <div class="tile__meta">コード</div>
-                        </div>
-                        <span aria-hidden="true">↗</span>
-                    </a>
-
-                    <a class="tile" href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
-                        <div>
-                            <div class="tile__title">Zenn</div>
-                            <div class="tile__meta">技術メモ</div>
-                        </div>
-                        <span aria-hidden="true">↗</span>
-                    </a>
-                </div>
-
-                <div class="panel-section">
-                    <h2 style="margin: 0 0 12px; font-size: 18px; letter-spacing: 0.02em;">最新記事</h2>
-                    <div id="latest-posts" class="post-list" aria-live="polite"></div>
-                    <div style="margin-top: 12px;">
-                        <a class="button" href="posts.html">記事一覧へ</a>
-                    </div>
-                </div>
-            </article>
+                <img class="hero-icon" src="assets/images/niikei_personal_icon.png" alt="niikei のアイコン">
+            </div>
         </section>
 
         <section class="section">
-            <article class="card card--glow card--glow-music" aria-label="Music">
-                <div class="panel-hero">
-                    <img class="panel-hero__icon" src="assets/images/niikei_music_icon.png" alt="Music">
+            <div class="section-head">
+                <h2 class="section-title">最新記事</h2>
+                <a class="button" href="posts.html">記事一覧</a>
+            </div>
+            <div id="latest-posts" class="post-list" aria-live="polite"></div>
+        </section>
+
+        <section class="section">
+            <article class="card feature">
+                <img class="feature__image" src="assets/images/niikei_music_icon.png" alt="Music">
+                <div class="stack">
                     <div>
-                        <h2 class="panel-hero__title" style="margin: 0 0 8px;">Music</h2>
-                        <p class="panel-hero__lead">音楽のページ。プレイリストやメモ、音楽関連の記事。</p>
-                        <div style="margin-top: 14px;">
-                            <a class="button" href="music.html">音楽ページへ</a>
-                        </div>
+                        <p class="eyebrow">Music</p>
+                        <h2 class="section-title">音楽ページ</h2>
+                        <p class="section-lead">音楽タグの記事やメモをまとめた専用ページです。</p>
+                    </div>
+                    <div>
+                        <a class="button button--accent" href="music.html">音楽ページを開く</a>
                     </div>
                 </div>
             </article>
@@ -132,7 +120,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div>&copy; 2024 niikei</div>
+            <div>&copy; 2026 niikei</div>
         </div>
     </footer>
 

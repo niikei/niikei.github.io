@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>記事 | niikei</title>
-    <meta name="description" content="niikei の記事（Markdown 管理）。">
+    <meta name="description" content="niikei の記事ページ。">
     <script>
         (() => {
             try {
@@ -29,18 +29,22 @@
             </a>
 
             <nav class="nav" aria-label="メイン">
-                <a href="templates/booklog.html">本棚</a>
+                <a href="index.html">ホーム</a>
+                <a href="booklog.html">本棚</a>
                 <a href="music.html">音楽</a>
-                <a href="posts.html">記事</a>
+                <a href="posts.html" aria-current="page">記事</a>
             </nav>
 
             <div class="nav__actions">
                 <button id="theme-toggle" class="button button--ghost" type="button" aria-pressed="false">ダーク</button>
                 <div class="social" aria-label="外部リンク">
-                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <img src="assets/images/github_icon.png" alt="GitHub">
                     </a>
-                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/n11_ke1/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <img src="assets/images/instagram_icon.png" alt="Instagram">
+                    </a>
+                    <a href="https://zenn.dev/niikei/" target="_blank" rel="noopener noreferrer" aria-label="Zenn">
                         <img src="assets/images/zenn_icon.svg" alt="Zenn">
                     </a>
                 </div>
@@ -49,10 +53,12 @@
     </header>
 
     <main class="container">
-        <section class="hero" style="padding-bottom: 0;">
-            <div class="card">
-                <a href="posts.html" style="color: var(--muted); text-decoration: none;">← 記事一覧</a>
-                <h1 id="post-title" style="margin: 12px 0 6px;"></h1>
+        <section class="hero">
+            <div class="card stack">
+                <div>
+                    <a class="button button--ghost" href="posts.html">← 記事一覧へ戻る</a>
+                </div>
+                <h1 id="post-title" class="section-title"></h1>
                 <div id="post-date" class="post-item__date"></div>
             </div>
         </section>
@@ -66,7 +72,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <div>&copy; 2024 niikei</div>
+            <div>&copy; 2026 niikei</div>
         </div>
     </footer>
 

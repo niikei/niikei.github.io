@@ -124,6 +124,14 @@ a {
   transition: 0.16s ease;
 }
 
+.nav .icon-link {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+}
+
 .nav a:hover,
 .nav a[aria-current="page"] {
   border-color: var(--border);
@@ -155,6 +163,13 @@ a {
   transition: 0.16s ease;
 }
 
+.button.icon-button {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
 .button:hover {
   border-color: color-mix(in oklab, var(--accent), var(--border) 40%);
 }
@@ -171,6 +186,13 @@ a {
 
 .button--accent:hover {
   background: color-mix(in oklab, var(--accent), black 8%);
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex-shrink: 0;
 }
 
 .social {

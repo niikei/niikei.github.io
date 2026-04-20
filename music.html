@@ -29,14 +29,26 @@
             </a>
 
             <nav class="nav" aria-label="メイン">
-                <a href="index.html">ホーム</a>
+                <a class="icon-link" href="index.html" aria-label="ホーム" title="ホーム">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3.5 10.5 12 3l8.5 7.5M5.5 9.8V21h13V9.8" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </a>
                 <a href="booklog.html">本棚</a>
                 <a href="music.html" aria-current="page">音楽</a>
                 <a href="posts.html">記事</a>
             </nav>
 
             <div class="nav__actions">
-                <button id="theme-toggle" class="button button--ghost" type="button" aria-pressed="false">ダーク</button>
+                <button id="theme-toggle" class="button button--ghost icon-button" type="button" aria-pressed="false"
+                    aria-label="テーマ切り替え" title="テーマ切り替え">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M14.6 3.1a8.8 8.8 0 1 0 6.3 14.9 8.1 8.1 0 0 1-6.3 2.6A8.8 8.8 0 0 1 14.6 3.1z"
+                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                    </svg>
+                </button>
                 <div class="social" aria-label="外部リンク">
                     <a href="https://github.com/niikei/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <img src="assets/images/github_icon.png" alt="GitHub">

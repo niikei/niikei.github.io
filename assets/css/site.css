@@ -1,19 +1,19 @@
 /* Main stylesheet - component imports */
 
-@import url("site/base.css");
-@import url("site/typography.css");
-@import url("site/layout.css");
-@import url("site/page-intro.css");
-@import url("site/hero.css");
-@import url("site/section.css");
-@import url("site/header.css");
-@import url("site/button.css");
-@import url("site/card.css");
-@import url("site/post-list.css");
-@import url("site/form.css");
-@import url("site/prose.css");
-@import url("site/bookshelf.css");
-@import url("site/footer.css");
+@import url("site/base/base.css");
+@import url("site/base/typography.css");
+@import url("site/utilities/layout.css");
+@import url("site/components/page-intro.css");
+@import url("site/components/hero.css");
+@import url("site/components/section.css");
+@import url("site/components/header.css");
+@import url("site/components/button.css");
+@import url("site/components/card.css");
+@import url("site/components/post-list.css");
+@import url("site/components/form.css");
+@import url("site/components/prose.css");
+@import url("site/components/bookshelf.css");
+@import url("site/components/footer.css");
 
 @media (prefers-reduced-motion: reduce) {
   * {

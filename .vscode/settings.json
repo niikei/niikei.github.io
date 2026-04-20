@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "zenn"
-    ]
+    ],
+    "[html]": {
+        "editor.tabSize": 2
+    }
 }

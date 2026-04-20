@@ -1,0 +1,26 @@
+/* Page intro: shared heading block for Music / Books / Posts */
+
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.page-intro__head {
+  display: grid;
+  gap: 0;
+}
+
+.page-intro__title {
+  margin: 8px 0 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(34px, 6vw, 64px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+}
+
+.page-intro__desc {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--muted);
+}

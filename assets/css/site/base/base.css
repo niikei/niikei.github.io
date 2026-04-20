@@ -48,9 +48,13 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(1000px 500px at -10% -15%, color-mix(in oklab, var(--accent), transparent 84%), transparent 70%),
-    radial-gradient(900px 400px at 110% 0%, color-mix(in oklab, var(--accent), transparent 88%), transparent 74%),
+    radial-gradient(1200px 700px at -12% -18%, color-mix(in oklab, var(--accent), transparent 86%), transparent 72%),
+    radial-gradient(1100px 640px at 112% -6%, color-mix(in oklab, var(--accent), transparent 90%), transparent 76%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg), white 2%), var(--bg) 62%, color-mix(in oklab, var(--bg), black 3%)),
     var(--bg);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: cover, cover, cover, auto;
+  background-attachment: fixed, fixed, fixed, scroll;
   font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
   line-height: 1.65;
 }
@@ -74,6 +78,10 @@ a {
 }
 
 @media (max-width: 680px) {
+  body {
+    background-attachment: scroll, scroll, scroll, scroll;
+  }
+
   .container {
     width: min(var(--container), 100% - 24px);
   }

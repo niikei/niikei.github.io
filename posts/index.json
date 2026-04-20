@@ -1,6 +1,16 @@
 {
   "posts": [
     {
+      "slug": "2026-04-21-nf-rock",
+      "title": "NF2025のテーマソングに選ばれてました",
+      "date": "2026-04-21",
+      "excerpt": "今さらですが、2025年度の11月祭（NF）のテーマソングに、私の作った曲が選ばれていました。",
+      "tags": [
+        "music"
+      ],
+      "file": "2026-04-21-nf-rock.md"
+    },
+    {
       "slug": "2024-06-26-vscode-extension",
       "title": "VS Code 拡張「テキスト校正くん with info」を作りました",
       "date": "2024-06-26",

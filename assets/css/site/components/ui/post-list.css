@@ -43,9 +43,18 @@
   background: var(--surface);
 }
 
+.post-item>div {
+  min-width: 0;
+}
+
 .post-item a {
   text-decoration: none;
   font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.post-item .tile__meta {
+  overflow-wrap: anywhere;
 }
 
 .post-item__date {

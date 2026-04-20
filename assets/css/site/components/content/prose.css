@@ -2,6 +2,7 @@
 
 .prose {
   color: var(--text);
+  overflow-wrap: anywhere;
 }
 
 .prose h1,
@@ -77,6 +78,9 @@
 
 .prose table {
   width: 100%;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-collapse: collapse;
   margin: 16px 0;
   overflow: hidden;

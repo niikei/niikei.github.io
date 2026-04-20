@@ -51,6 +51,10 @@
 
 @media (max-width: 900px) {
   .hero-main {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-main {
     gap: 20px;
   }
 

@@ -229,6 +229,9 @@ a {
 
 .hero {
   padding: 56px 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .eyebrow {

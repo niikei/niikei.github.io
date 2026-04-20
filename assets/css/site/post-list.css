@@ -1,0 +1,63 @@
+/* Post list: tiles and article list items */
+
+.tile {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 13px 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: 0.16s ease;
+}
+
+.tile:hover {
+  border-color: color-mix(in oklab, var(--accent), var(--border) 45%);
+  transform: translateY(-1px);
+}
+
+.tile__title {
+  font-weight: 700;
+}
+
+.tile__meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.post-list {
+  display: grid;
+  gap: 10px;
+}
+
+.post-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.post-item a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.post-item__date {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .post-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

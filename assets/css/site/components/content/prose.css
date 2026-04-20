@@ -15,6 +15,20 @@
   margin: 14px 0;
 }
 
+.prose ul,
+.prose ol {
+  margin: 14px 0;
+  padding-left: 1.4em;
+}
+
+.prose li+li {
+  margin-top: 6px;
+}
+
+.prose input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
 .prose pre {
   overflow: auto;
   background: var(--surface-soft);
@@ -59,4 +73,41 @@
   border: 0;
   border-top: 1px solid var(--border);
   margin: 24px 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose th {
+  background: var(--surface-soft);
+  font-weight: 700;
+}
+
+.prose iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 16px 0;
 }

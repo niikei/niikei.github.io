@@ -1,6 +1,70 @@
 // Markdown rendering engine
 const PostsMarkdown = (() => {
-  function renderInline(text) {
+  const TRUSTED_IFRAME_ORIGINS = [
+    /^https:\/\/www\.youtube\.com\//i,
+    /^https:\/\/youtube\.com\//i,
+    /^https:\/\/youtu\.be\//i,
+    /^https:\/\/player\.vimeo\.com\//i,
+  ];
+
+  function hasRichRenderer() {
+    return typeof window !== "undefined" && window.marked && window.DOMPurify;
+  }
+
+  function sanitizeRichHtml(html) {
+    const safe = window.DOMPurify.sanitize(html, {
+      USE_PROFILES: { html: true },
+      ADD_TAGS: ["iframe"],
+      ADD_ATTR: [
+        "allow",
+        "allowfullscreen",
+        "frameborder",
+        "loading",
+        "referrerpolicy",
+        "title",
+      ],
+    });
+
+    const template = document.createElement("template");
+    template.innerHTML = safe;
+
+    for (const link of template.content.querySelectorAll("a[href]")) {
+      const href = link.getAttribute("href") || "";
+      const isExternal = /^https?:\/\//i.test(href);
+      if (isExternal) {
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener noreferrer");
+      }
+    }
+
+    for (const iframe of template.content.querySelectorAll("iframe")) {
+      const src = (iframe.getAttribute("src") || "").trim();
+      const isTrusted = TRUSTED_IFRAME_ORIGINS.some((re) => re.test(src));
+      if (!isTrusted) {
+        iframe.remove();
+        continue;
+      }
+
+      iframe.setAttribute("loading", "lazy");
+      iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+    }
+
+    return template.innerHTML;
+  }
+
+  function renderWithMarked(markdown) {
+    window.marked.setOptions({
+      gfm: true,
+      breaks: false,
+      headerIds: true,
+      mangle: false,
+    });
+
+    const rawHtml = window.marked.parse(String(markdown));
+    return sanitizeRichHtml(rawHtml);
+  }
+
+  function fallbackRenderInline(text) {
     const escaped = PostsUtils.escapeHtml(text);
 
     const codeSpans = [];
@@ -44,7 +108,7 @@ const PostsMarkdown = (() => {
     );
   }
 
-  function renderMarkdown(markdown) {
+  function fallbackRenderMarkdown(markdown) {
     const lines = String(markdown).replaceAll("\r\n", "\n").split("\n");
 
     const html = [];
@@ -58,7 +122,7 @@ const PostsMarkdown = (() => {
 
     function flushParagraph() {
       if (paragraph.length === 0) return;
-      html.push(`<p>${renderInline(paragraph.join(" ").trim())}</p>`);
+      html.push(`<p>${fallbackRenderInline(paragraph.join(" ").trim())}</p>`);
       paragraph = [];
     }
 
@@ -90,7 +154,7 @@ const PostsMarkdown = (() => {
     function flushBlockquote() {
       if (blockquote.length === 0) return;
       html.push(
-        `<blockquote><p>${renderInline(blockquote.join(" ").trim())}</p></blockquote>`,
+        `<blockquote><p>${fallbackRenderInline(blockquote.join(" ").trim())}</p></blockquote>`,
       );
       blockquote = [];
     }
@@ -141,7 +205,7 @@ const PostsMarkdown = (() => {
 
         const level = headingMatch[1].length;
         html.push(
-          `<h${level}>${renderInline(headingMatch[2].trim())}</h${level}>`,
+          `<h${level}>${fallbackRenderInline(headingMatch[2].trim())}</h${level}>`,
         );
         continue;
       }
@@ -163,7 +227,7 @@ const PostsMarkdown = (() => {
           flushList();
           list = "ol";
         }
-        listItems.push(`<li>${renderInline(olMatch[2].trim())}</li>`);
+        listItems.push(`<li>${fallbackRenderInline(olMatch[2].trim())}</li>`);
         continue;
       }
 
@@ -176,7 +240,7 @@ const PostsMarkdown = (() => {
           flushList();
           list = "ul";
         }
-        listItems.push(`<li>${renderInline(ulMatch[1].trim())}</li>`);
+        listItems.push(`<li>${fallbackRenderInline(ulMatch[1].trim())}</li>`);
         continue;
       }
 
@@ -190,8 +254,13 @@ const PostsMarkdown = (() => {
     return html.join("\n");
   }
 
+  function renderMarkdown(markdown) {
+    if (hasRichRenderer()) return renderWithMarked(markdown);
+    return fallbackRenderMarkdown(markdown);
+  }
+
   return {
-    renderInline,
+    renderInline: fallbackRenderInline,
     renderMarkdown,
   };
 })();

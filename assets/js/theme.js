@@ -1,6 +1,11 @@
 (() => {
   const STORAGE_KEY = "theme";
-  const SWIPE_PAGES = ["booklog", "music", "posts"];
+  const SWIPE_ORDER = [
+    { page: "home", href: "index.html" },
+    { page: "booklog", href: "booklog.html" },
+    { page: "music", href: "music.html" },
+    { page: "posts", href: "posts.html" },
+  ];
 
   function safeGetItem(key) {
     try {
@@ -80,15 +85,15 @@
 
   function getSwipeTarget(deltaX) {
     const page = getPageName();
-    const currentIndex = SWIPE_PAGES.indexOf(page);
+    const currentIndex = SWIPE_ORDER.findIndex((item) => item.page === page);
     if (currentIndex === -1) return null;
 
-    if (deltaX < 0 && currentIndex < SWIPE_PAGES.length - 1) {
-      return `${SWIPE_PAGES[currentIndex + 1]}.html`;
+    if (deltaX < 0 && currentIndex < SWIPE_ORDER.length - 1) {
+      return SWIPE_ORDER[currentIndex + 1].href;
     }
 
     if (deltaX > 0 && currentIndex > 0) {
-      return `${SWIPE_PAGES[currentIndex - 1]}.html`;
+      return SWIPE_ORDER[currentIndex - 1].href;
     }
 
     return null;
@@ -107,28 +112,39 @@
     if (!window.matchMedia || !window.matchMedia("(max-width: 680px)").matches)
       return;
 
-    if (SWIPE_PAGES.indexOf(getPageName()) === -1) return;
+    if (!SWIPE_ORDER.some((item) => item.page === getPageName())) return;
 
     let startX = 0;
     let startY = 0;
     let tracking = false;
 
     function navigateWithSwipeAnimation(target, direction) {
+      const reduceMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion) {
+        window.location.href = target;
+        return;
+      }
+
       const body = document.body;
       body.classList.remove(
         "is-swipe-navigating-next",
         "is-swipe-navigating-prev",
       );
-      body.classList.add(
-        "is-swipe-navigating",
-        direction === "next" ?
-          "is-swipe-navigating-next"
-        : "is-swipe-navigating-prev",
-      );
 
-      window.setTimeout(() => {
-        window.location.href = target;
-      }, 140);
+      window.requestAnimationFrame(() => {
+        body.classList.add(
+          "is-swipe-navigating",
+          direction === "next" ?
+            "is-swipe-navigating-next"
+          : "is-swipe-navigating-prev",
+        );
+
+        window.setTimeout(() => {
+          window.location.href = target;
+        }, 220);
+      });
     }
 
     document.addEventListener(

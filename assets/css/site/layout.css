@@ -75,6 +75,17 @@
   gap: 12px;
 }
 
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.page-intro__head {
+  display: grid;
+  gap: 8px;
+}
+
 .feature {
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);

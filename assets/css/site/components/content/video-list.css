@@ -1,0 +1,28 @@
+/* Video list: managed embeds on music page */
+
+.video-list {
+  display: grid;
+  gap: 16px;
+}
+
+.video-item {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 12px;
+}
+
+.video-item__title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.video-item__embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}

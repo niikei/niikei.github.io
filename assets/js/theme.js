@@ -1,5 +1,6 @@
 (() => {
   const STORAGE_KEY = "theme";
+  const SWIPE_PAGES = ["booklog", "music", "posts"];
 
   function safeGetItem(key) {
     try {
@@ -73,6 +74,101 @@
     applyTheme(next);
   }
 
+  function getPageName() {
+    return document.body?.dataset.page || "";
+  }
+
+  function getSwipeTarget(deltaX) {
+    const page = getPageName();
+    const currentIndex = SWIPE_PAGES.indexOf(page);
+    if (currentIndex === -1) return null;
+
+    if (deltaX < 0 && currentIndex < SWIPE_PAGES.length - 1) {
+      return `${SWIPE_PAGES[currentIndex + 1]}.html`;
+    }
+
+    if (deltaX > 0 && currentIndex > 0) {
+      return `${SWIPE_PAGES[currentIndex - 1]}.html`;
+    }
+
+    return null;
+  }
+
+  function shouldIgnoreSwipeStart(target) {
+    if (!(target instanceof Element)) return false;
+    return Boolean(
+      target.closest(
+        "a, button, input, select, textarea, label, #site-mobile-menu",
+      ),
+    );
+  }
+
+  function setupSwipeNavigation() {
+    if (!window.matchMedia || !window.matchMedia("(max-width: 680px)").matches)
+      return;
+
+    if (SWIPE_PAGES.indexOf(getPageName()) === -1) return;
+
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    function navigateWithSwipeAnimation(target, direction) {
+      const body = document.body;
+      body.classList.remove(
+        "is-swipe-navigating-next",
+        "is-swipe-navigating-prev",
+      );
+      body.classList.add(
+        "is-swipe-navigating",
+        direction === "next" ?
+          "is-swipe-navigating-next"
+        : "is-swipe-navigating-prev",
+      );
+
+      window.setTimeout(() => {
+        window.location.href = target;
+      }, 140);
+    }
+
+    document.addEventListener(
+      "touchstart",
+      (event) => {
+        if (event.touches.length !== 1) return;
+        if (shouldIgnoreSwipeStart(event.target)) return;
+
+        const touch = event.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        tracking = true;
+      },
+      { passive: true },
+    );
+
+    document.addEventListener(
+      "touchend",
+      (event) => {
+        if (!tracking) return;
+        tracking = false;
+
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+
+        if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY))
+          return;
+
+        const target = getSwipeTarget(deltaX);
+        if (!target) return;
+
+        navigateWithSwipeAnimation(target, deltaX < 0 ? "next" : "prev");
+      },
+      { passive: true },
+    );
+  }
+
   applyTheme(getInitialTheme());
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -81,6 +177,8 @@
     for (const toggle of toggles) {
       toggle.addEventListener("click", toggleTheme);
     }
+
+    setupSwipeNavigation();
 
     const menuToggle = document.getElementById("menu-toggle");
     const mobileMenu = document.getElementById("site-mobile-menu");

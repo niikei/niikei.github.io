@@ -58,6 +58,19 @@ body {
   background-attachment: fixed, fixed, fixed, scroll;
   font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
   line-height: 1.65;
+  transition: opacity 0.14s ease, transform 0.14s ease;
+}
+
+body.is-swipe-navigating {
+  opacity: 0.72;
+}
+
+body.is-swipe-navigating-next {
+  transform: translateX(-10px);
+}
+
+body.is-swipe-navigating-prev {
+  transform: translateX(10px);
 }
 
 a {

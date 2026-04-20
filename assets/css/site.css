@@ -223,6 +223,10 @@ a {
   display: block;
 }
 
+:root[data-theme="dark"] .social img[alt="GitHub"] {
+  filter: invert(1) brightness(1.12);
+}
+
 .hero {
   padding: 56px 0 22px;
 }

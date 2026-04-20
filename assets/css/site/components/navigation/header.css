@@ -11,13 +11,18 @@
   backdrop-filter: blur(8px);
 }
 
-.site-header__inner {
+.site-header__desktop,
+.site-header__mobile {
   min-height: 72px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
+}
+
+.site-header__mobile {
+  display: none;
 }
 
 .brand {
@@ -87,6 +92,10 @@
   margin-left: auto;
 }
 
+.site-header__mobile-theme-toggle {
+  display: none;
+}
+
 .site-header__mobile-menu {
   display: none;
 }
@@ -131,11 +140,16 @@
 }
 
 @media (max-width: 680px) {
-  .site-header__inner {
+  .site-header__desktop {
+    display: none;
+  }
+
+  .site-header__mobile {
+    display: flex;
     min-height: 64px;
+    padding: 10px 0;
     align-items: center;
     flex-wrap: nowrap;
-    padding: 10px 0;
   }
 
   .nav {
@@ -146,8 +160,14 @@
     display: none;
   }
 
+  .site-header__mobile-theme-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
   .site-header__menu-toggle {
     display: inline-flex;
+    margin-left: 0;
   }
 
   .site-header__mobile-menu {
@@ -155,8 +175,9 @@
     gap: 12px;
     position: absolute;
     top: calc(100% + 8px);
-    left: 0;
-    right: 0;
+    right: 12px;
+    left: auto;
+    width: min(320px, calc(100% - 24px));
     padding: 12px;
     border-bottom: 1px solid color-mix(in oklab, var(--border), transparent 20%);
     background: color-mix(in oklab, var(--bg), transparent 2%);
@@ -178,13 +199,21 @@
 
   .site-header__mobile-nav a {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .site-header__mobile-nav .icon-link {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-end;
+    padding-right: 12px;
   }
 
   .site-header__mobile-actions {
     display: flex;
     margin-left: 0;
-    justify-content: flex-start;
+    justify-content: flex-end;
     flex-wrap: wrap;
   }
 }

@@ -23,26 +23,8 @@
 }
 
 .bookshelf-advanced {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface-soft);
-  padding: 12px 14px;
-}
-
-.bookshelf-advanced>summary {
-  cursor: pointer;
-  list-style: none;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.bookshelf-advanced>summary::-webkit-details-marker {
-  display: none;
-}
-
-.bookshelf-advanced[open]>summary {
-  margin-bottom: 12px;
+  padding: 0;
+  overflow: clip;
 }
 
 .bookshelf-controls {
@@ -93,7 +75,7 @@
   }
 
   .bookshelf-advanced {
-    padding: 10px 12px;
+    padding: 0;
   }
 
   .bookshelf-controls {

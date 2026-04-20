@@ -11,6 +11,24 @@ const PostsMarkdown = (() => {
     return typeof window !== "undefined" && window.marked && window.DOMPurify;
   }
 
+  function normalizePostRelativeUrl(rawUrl) {
+    const value = String(rawUrl || "").trim();
+    if (!value) return value;
+
+    if (
+      value.startsWith("#") ||
+      value.startsWith("/") ||
+      value.startsWith("?") ||
+      /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(value) ||
+      value.startsWith("//")
+    ) {
+      return value;
+    }
+
+    if (value.startsWith("./")) return `posts/${value.slice(2)}`;
+    return `posts/${value}`;
+  }
+
   function sanitizeRichHtml(html) {
     const safe = window.DOMPurify.sanitize(html, {
       USE_PROFILES: { html: true },
@@ -29,12 +47,18 @@ const PostsMarkdown = (() => {
     template.innerHTML = safe;
 
     for (const link of template.content.querySelectorAll("a[href]")) {
-      const href = link.getAttribute("href") || "";
+      const href = normalizePostRelativeUrl(link.getAttribute("href") || "");
+      link.setAttribute("href", href);
       const isExternal = /^https?:\/\//i.test(href);
       if (isExternal) {
         link.setAttribute("target", "_blank");
         link.setAttribute("rel", "noopener noreferrer");
       }
+    }
+
+    for (const image of template.content.querySelectorAll("img[src]")) {
+      const src = normalizePostRelativeUrl(image.getAttribute("src") || "");
+      image.setAttribute("src", src);
     }
 
     for (const iframe of template.content.querySelectorAll("iframe")) {
@@ -80,7 +104,7 @@ const PostsMarkdown = (() => {
         const safeAlt = alt.trim();
         const safeUrl = PostsUtils.sanitizeUrl(url);
         if (safeUrl === "#") return "";
-        return `<img src="${safeUrl}" alt="${safeAlt}" loading="lazy">`;
+        return `<img src="${normalizePostRelativeUrl(safeUrl)}" alt="${safeAlt}" loading="lazy">`;
       },
     );
 
@@ -88,7 +112,7 @@ const PostsMarkdown = (() => {
       /\[([^\]]+)\]\(([^)]+)\)/g,
       (_, label, url) => {
         const safeLabel = label.trim();
-        const safeUrl = PostsUtils.sanitizeUrl(url);
+        const safeUrl = normalizePostRelativeUrl(PostsUtils.sanitizeUrl(url));
         const isExternal = /^https?:\/\//i.test(safeUrl);
         const attrs =
           isExternal ? ' target="_blank" rel="noopener noreferrer"' : "";

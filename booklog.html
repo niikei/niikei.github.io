@@ -60,6 +60,32 @@
             </label>
           </div>
 
+          <div class="bookshelf-layout" aria-label="表示切替">
+            <span class="field__label">表示</span>
+            <div
+              class="bookshelf-layout__buttons"
+              role="group"
+              aria-label="本棚の表示切替"
+            >
+              <button
+                type="button"
+                class="button bookshelf-layout__button"
+                data-bookshelf-layout="grid"
+                aria-pressed="false"
+              >
+                グリッド
+              </button>
+              <button
+                type="button"
+                class="button bookshelf-layout__button"
+                data-bookshelf-layout="list"
+                aria-pressed="false"
+              >
+                リスト
+              </button>
+            </div>
+          </div>
+
           <div id="bookshelf-status" class="muted" aria-live="polite"></div>
         </div>
       </section>

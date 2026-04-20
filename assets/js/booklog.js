@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const countSelect = document.getElementById("count");
   const bookshelf = document.getElementById("bookshelf");
   const status = document.getElementById("bookshelf-status");
+  const layoutButtons = Array.from(
+    document.querySelectorAll("[data-bookshelf-layout]"),
+  );
 
   if (!(categorySelect instanceof HTMLSelectElement)) return;
   if (!(statusSelect instanceof HTMLSelectElement)) return;
@@ -11,8 +14,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const USER = "niikei";
   const SCRIPT_ID = "booklog-jsonp";
+  const LAYOUT_KEY = "booklog-layout";
 
   let requestCounter = 0;
+  let currentLayout = getInitialLayout();
+
+  function supportsCompactList() {
+    return window.matchMedia("(max-width: 680px)").matches;
+  }
+
+  function getInitialLayout() {
+    const saved = window.localStorage.getItem(LAYOUT_KEY);
+    if (saved === "grid" || saved === "list") return saved;
+    return supportsCompactList() ? "list" : "grid";
+  }
+
+  function saveLayout(layout) {
+    window.localStorage.setItem(LAYOUT_KEY, layout);
+  }
+
+  function applyLayout(layout) {
+    currentLayout = layout;
+    bookshelf.dataset.layout = layout;
+    saveLayout(layout);
+
+    for (const button of layoutButtons) {
+      const isActive = button.dataset.bookshelfLayout === layout;
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    }
+  }
+
+  function syncLayoutWithViewport() {
+    if (window.localStorage.getItem(LAYOUT_KEY)) return;
+    applyLayout(supportsCompactList() ? "list" : "grid");
+  }
 
   function setBusy(isBusy) {
     bookshelf.setAttribute("aria-busy", isBusy ? "true" : "false");
@@ -27,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const trimmed = String(url || "").trim();
     if (!trimmed) return null;
     const lower = trimmed.toLowerCase();
-    if (lower.startsWith("javascript:") || lower.startsWith("data:")) return null;
+    if (lower.startsWith("javascript:") || lower.startsWith("data:"))
+      return null;
     return trimmed;
   }
 
@@ -106,14 +142,15 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => {
       try {
         delete window[callbackName];
-      } catch { }
+      } catch {}
     }, 0);
   }
 
   function fetchBooks() {
     const category = categorySelect.value;
     const statusValue = statusSelect.value;
-    const countValue = countSelect instanceof HTMLSelectElement ? countSelect.value : "24";
+    const countValue =
+      countSelect instanceof HTMLSelectElement ? countSelect.value : "24";
 
     requestCounter += 1;
     const currentRequest = requestCounter;
@@ -156,7 +193,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       setBusy(false);
       setStatusMessage("読み込みに失敗しました。");
-      clearBookshelf("読み込みに失敗しました。時間をおいて再度お試しください。");
+      clearBookshelf(
+        "読み込みに失敗しました。時間をおいて再度お試しください。",
+      );
       cleanupCallback(callbackName);
     };
 
@@ -174,7 +213,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   categorySelect.addEventListener("change", fetchBooks);
   statusSelect.addEventListener("change", fetchBooks);
-  if (countSelect instanceof HTMLSelectElement) countSelect.addEventListener("change", fetchBooks);
+  if (countSelect instanceof HTMLSelectElement)
+    countSelect.addEventListener("change", fetchBooks);
+
+  for (const button of layoutButtons) {
+    button.addEventListener("click", () => {
+      const layout = button.dataset.bookshelfLayout;
+      if (layout !== "grid" && layout !== "list") return;
+      applyLayout(layout);
+    });
+  }
+
+  window.matchMedia("(max-width: 680px)").addEventListener("change", () => {
+    syncLayoutWithViewport();
+  });
+
+  applyLayout(currentLayout);
 
   fetchBooks();
 });

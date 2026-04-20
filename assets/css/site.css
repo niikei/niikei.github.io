@@ -543,6 +543,7 @@ a {
 }
 
 @media (max-width: 900px) {
+
   .hero-main,
   .feature {
     grid-template-columns: 1fr;

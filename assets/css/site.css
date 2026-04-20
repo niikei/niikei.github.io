@@ -221,17 +221,6 @@ a {
   width: 20px;
   height: 20px;
   display: block;
-  opacity: 0.9;
-  filter: grayscale(1) contrast(1.1);
-}
-
-:root[data-theme="dark"] .social img {
-  opacity: 0.96;
-  filter: grayscale(1) brightness(1.15) contrast(1.1);
-}
-
-.social a:hover img {
-  opacity: 1;
 }
 
 .hero {

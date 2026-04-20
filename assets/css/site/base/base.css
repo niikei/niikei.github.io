@@ -88,6 +88,6 @@ a {
   }
 
   .container {
-    width: min(var(--container), 100% - 24px);
+    width: min(var(--container), 100% - 32px);
   }
 }

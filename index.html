@@ -16,8 +16,14 @@
     <div data-site-header></div>
 
     <main class="container">
-      <section class="hero">
-        <div class="hero-main">
+      <section class="hero hero--home">
+        <img
+          class="hero-icon hero-icon--home"
+          src="assets/images/niikei_personal_icon.png"
+          alt="niikei のアイコン"
+        />
+
+        <div class="hero-content">
           <div class="stack stack--lg">
             <div>
               <p class="eyebrow">Personal Site</p>
@@ -26,48 +32,8 @@
                 ソフトウェア・読書・音楽を中心に、日々の記録をシンプルにまとめています。
               </p>
             </div>
-
-            <div class="quick-links" aria-label="主要ページ">
-              <a class="tile" href="posts.html">
-                <div>
-                  <div class="tile__title">記事</div>
-                  <div class="tile__meta">Markdown で管理</div>
-                </div>
-                <span aria-hidden="true">→</span>
-              </a>
-
-              <a class="tile" href="booklog.html">
-                <div>
-                  <div class="tile__title">本棚</div>
-                  <div class="tile__meta">Booklog 連携</div>
-                </div>
-                <span aria-hidden="true">→</span>
-              </a>
-
-              <a class="tile" href="music.html">
-                <div>
-                  <div class="tile__title">音楽</div>
-                  <div class="tile__meta">音楽関連の記事</div>
-                </div>
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
           </div>
-
-          <img
-            class="hero-icon"
-            src="assets/images/niikei_personal_icon.png"
-            alt="niikei のアイコン"
-          />
         </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2 class="section-title">最新記事</h2>
-          <a class="button" href="posts.html">記事一覧</a>
-        </div>
-        <div id="latest-posts" class="post-list" aria-live="polite"></div>
       </section>
 
       <section class="section">
@@ -92,6 +58,14 @@
             </div>
           </div>
         </article>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title">最新記事</h2>
+          <a class="button" href="posts.html">記事一覧</a>
+        </div>
+        <div id="latest-posts" class="post-list" aria-live="polite"></div>
       </section>
     </main>
 

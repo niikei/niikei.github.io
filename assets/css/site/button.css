@@ -1,0 +1,44 @@
+/* Button: interactive button elements */
+
+.button {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.16s ease;
+}
+
+.button.icon-button {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.button:hover {
+  border-color: color-mix(in oklab, var(--accent), var(--border) 40%);
+}
+
+.button--ghost {
+  background: transparent;
+}
+
+.button--accent {
+  border-color: color-mix(in oklab, var(--accent), black 15%);
+  background: var(--accent);
+  color: #f5fffd;
+}
+
+.button--accent:hover {
+  background: color-mix(in oklab, var(--accent), black 8%);
+}

@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const countSelect = document.getElementById("count");
   const bookshelf = document.getElementById("bookshelf");
   const status = document.getElementById("bookshelf-status");
+  const filterSummary = document.getElementById("bookshelf-filter-summary");
+  const advancedFilters = document.getElementById("bookshelf-advanced");
   const layoutButtons = Array.from(
     document.querySelectorAll("[data-bookshelf-layout]"),
   );
@@ -15,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const USER = "niikei";
   const SCRIPT_ID = "booklog-jsonp";
   const LAYOUT_KEY = "booklog-layout";
+  const FILTER_PANEL_KEY = "booklog-filters-open";
 
   let requestCounter = 0;
   let currentLayout = getInitialLayout();
@@ -47,6 +50,61 @@ document.addEventListener("DOMContentLoaded", () => {
   function syncLayoutWithViewport() {
     if (window.localStorage.getItem(LAYOUT_KEY)) return;
     applyLayout(supportsCompactList() ? "list" : "grid");
+  }
+
+  function getCategoryLabel(value) {
+    const categories = {
+      0: "すべて",
+      3670563: "文芸書",
+      3670562: "技術書",
+      3670565: "人文書",
+      3670564: "漫画",
+    };
+    return categories[String(value)] || "すべて";
+  }
+
+  function getStatusLabel(value) {
+    const statuses = {
+      0: "すべて",
+      1: "読みたい",
+      2: "いま読んでる",
+      3: "読み終わった",
+    };
+    return statuses[String(value)] || "すべて";
+  }
+
+  function updateFilterSummary() {
+    if (!(filterSummary instanceof HTMLElement)) return;
+    const countValue =
+      countSelect instanceof HTMLSelectElement ? countSelect.value : "24";
+    const parts = [
+      `カテゴリ: ${getCategoryLabel(categorySelect.value)}`,
+      `ステータス: ${getStatusLabel(statusSelect.value)}`,
+      `表示件数: ${countValue}件`,
+    ];
+    filterSummary.textContent = parts.join(" / ");
+  }
+
+  function syncAdvancedPanel() {
+    if (!(advancedFilters instanceof HTMLDetailsElement)) return;
+    const saved = window.localStorage.getItem(FILTER_PANEL_KEY);
+    if (saved === "open") {
+      advancedFilters.open = true;
+      return;
+    }
+    if (saved === "closed") {
+      advancedFilters.open = false;
+      return;
+    }
+    advancedFilters.open = !supportsCompactList();
+  }
+
+  function saveAdvancedPanelState() {
+    if (!(advancedFilters instanceof HTMLDetailsElement)) return;
+    window.localStorage.setItem(
+      FILTER_PANEL_KEY,
+      advancedFilters.open ? "open" : "closed",
+    );
   }
 
   function setBusy(isBusy) {
@@ -152,6 +210,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const countValue =
       countSelect instanceof HTMLSelectElement ? countSelect.value : "24";
 
+    updateFilterSummary();
+
     requestCounter += 1;
     const currentRequest = requestCounter;
 
@@ -216,6 +276,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (countSelect instanceof HTMLSelectElement)
     countSelect.addEventListener("change", fetchBooks);
 
+  if (advancedFilters instanceof HTMLDetailsElement) {
+    advancedFilters.addEventListener("toggle", saveAdvancedPanelState);
+  }
+
   for (const button of layoutButtons) {
     button.addEventListener("click", () => {
       const layout = button.dataset.bookshelfLayout;
@@ -226,9 +290,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.matchMedia("(max-width: 680px)").addEventListener("change", () => {
     syncLayoutWithViewport();
+    syncAdvancedPanel();
   });
 
   applyLayout(currentLayout);
+  syncAdvancedPanel();
+  updateFilterSummary();
 
   fetchBooks();
 });

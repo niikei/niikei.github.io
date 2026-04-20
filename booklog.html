@@ -26,65 +26,77 @@
             </p>
           </div>
         </div>
-        <div class="card stack">
-          <p class="eyebrow">絞り込み</p>
-          <div class="bookshelf-controls" aria-label="絞り込み">
-            <label class="field" for="category">
-              <span class="field__label">カテゴリ</span>
-              <select id="category" class="select">
-                <option value="0">すべて</option>
-                <option value="3670563">文芸書</option>
-                <option value="3670562">技術書</option>
-                <option value="3670565">人文書</option>
-                <option value="3670564">漫画</option>
-              </select>
-            </label>
+        <div class="card stack bookshelf-panel">
+          <div class="bookshelf-toolbar">
+            <div class="bookshelf-toolbar__summary">
+              <p class="eyebrow">絞り込み</p>
+              <p
+                id="bookshelf-filter-summary"
+                class="bookshelf-summary muted"
+              ></p>
+            </div>
 
-            <label class="field" for="status">
-              <span class="field__label">ステータス</span>
-              <select id="status" class="select">
-                <option value="0">すべて</option>
-                <option value="1">読みたい</option>
-                <option value="2">いま読んでる</option>
-                <option value="3">読み終わった</option>
-              </select>
-            </label>
-
-            <label class="field" for="count">
-              <span class="field__label">表示件数</span>
-              <select id="count" class="select">
-                <option value="12">12</option>
-                <option value="24" selected>24</option>
-                <option value="48">48</option>
-              </select>
-            </label>
-          </div>
-
-          <div class="bookshelf-layout" aria-label="表示切替">
-            <span class="field__label">表示</span>
-            <div
-              class="bookshelf-layout__buttons"
-              role="group"
-              aria-label="本棚の表示切替"
-            >
-              <button
-                type="button"
-                class="button bookshelf-layout__button"
-                data-bookshelf-layout="grid"
-                aria-pressed="false"
+            <div class="bookshelf-layout" aria-label="表示切替">
+              <span class="field__label">表示</span>
+              <div
+                class="bookshelf-layout__buttons"
+                role="group"
+                aria-label="本棚の表示切替"
               >
-                グリッド
-              </button>
-              <button
-                type="button"
-                class="button bookshelf-layout__button"
-                data-bookshelf-layout="list"
-                aria-pressed="false"
-              >
-                リスト
-              </button>
+                <button
+                  type="button"
+                  class="button bookshelf-layout__button"
+                  data-bookshelf-layout="grid"
+                  aria-pressed="false"
+                >
+                  グリッド
+                </button>
+                <button
+                  type="button"
+                  class="button bookshelf-layout__button"
+                  data-bookshelf-layout="list"
+                  aria-pressed="false"
+                >
+                  リスト
+                </button>
+              </div>
             </div>
           </div>
+
+          <details class="bookshelf-advanced" id="bookshelf-advanced">
+            <summary>詳細条件</summary>
+            <div class="bookshelf-controls" aria-label="絞り込み">
+              <label class="field" for="category">
+                <span class="field__label">カテゴリ</span>
+                <select id="category" class="select">
+                  <option value="0">すべて</option>
+                  <option value="3670563">文芸書</option>
+                  <option value="3670562">技術書</option>
+                  <option value="3670565">人文書</option>
+                  <option value="3670564">漫画</option>
+                </select>
+              </label>
+
+              <label class="field" for="status">
+                <span class="field__label">ステータス</span>
+                <select id="status" class="select">
+                  <option value="0">すべて</option>
+                  <option value="1">読みたい</option>
+                  <option value="2">いま読んでる</option>
+                  <option value="3">読み終わった</option>
+                </select>
+              </label>
+
+              <label class="field" for="count">
+                <span class="field__label">表示件数</span>
+                <select id="count" class="select">
+                  <option value="12">12</option>
+                  <option value="24" selected>24</option>
+                  <option value="48">48</option>
+                </select>
+              </label>
+            </div>
+          </details>
 
           <div id="bookshelf-status" class="muted" aria-live="polite"></div>
         </div>

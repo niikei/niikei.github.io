@@ -1,7 +1,51 @@
 /* Form: input fields, selects, form layout */
 
+.bookshelf-panel {
+  gap: 14px;
+}
+
+.bookshelf-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.bookshelf-toolbar__summary {
+  display: grid;
+  gap: 4px;
+}
+
+.bookshelf-summary {
+  margin: 0;
+  font-size: 13px;
+}
+
+.bookshelf-advanced {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-soft);
+  padding: 12px 14px;
+}
+
+.bookshelf-advanced>summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.bookshelf-advanced>summary::-webkit-details-marker {
+  display: none;
+}
+
+.bookshelf-advanced[open]>summary {
+  margin-bottom: 12px;
+}
+
 .bookshelf-controls {
-  margin-top: 14px;
   display: flex;
   align-items: flex-end;
   gap: 12px;
@@ -36,12 +80,34 @@
 }
 
 @media (max-width: 680px) {
+  .bookshelf-panel {
+    gap: 12px;
+  }
+
+  .bookshelf-toolbar {
+    align-items: flex-start;
+  }
+
+  .bookshelf-toolbar__summary {
+    width: 100%;
+  }
+
+  .bookshelf-advanced {
+    padding: 10px 12px;
+  }
+
   .bookshelf-controls {
     align-items: stretch;
+    margin-top: 0;
   }
 
   .field {
     min-width: 0;
     flex: 1;
+  }
+
+  .bookshelf-controls .field {
+    width: 100%;
+    flex: 1 1 100%;
   }
 }
